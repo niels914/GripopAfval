@@ -60,9 +60,27 @@ bewaken dat de rekenlogica blijft kloppen na aanpassingen.
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
-RESEND_API_KEY=<optioneel, voor bevestigingsmail — nog niet aangesloten>
+RESEND_API_KEY=<resend api-key>
+RESEND_FROM="GripOpAfval <noreply@gripopafval.nl>"
+LEAD_NOTIFY_EMAIL=<ontvanger interne leadnotificaties>
 NEXT_PUBLIC_SITE_URL=https://gripopafval.nl
 ```
+
+## E-mails (Resend)
+
+Bij elke lead verstuurt `/api/leads` automatisch (templates: `lib/email/templates.ts`):
+
+| Bron | Naar invuller | Naar `LEAD_NOTIFY_EMAIL` |
+| --- | --- | --- |
+| Afvalscan | Volledig scanrapport (cijfers, samenstelling, scenario's) | Notificatie + scan-samenvatting |
+| Whitepaper | Downloadlink whitepaper | Notificatie |
+| Contact | — | Notificatie (reply-to = invuller) |
+
+Setup: maak een [Resend](https://resend.com)-account, verifieer het domein
+`gripopafval.nl` (SPF + DKIM-records) en zet de drie env-vars. Zonder
+`RESEND_API_KEY` blijft alles werken; mails worden dan alleen gelogd.
+Formulieren hebben spam-bescherming (honeypot + minimale invultijd) —
+verdachte submissies worden stil genegeerd.
 
 ## Deploy naar Netlify
 
@@ -86,6 +104,5 @@ NEXT_PUBLIC_SITE_URL=https://gripopafval.nl
   ("u zit 20% boven het sectorgemiddelde")
 - **Self-service dashboard**: klantlogin met kwartaalcijfers, trend en
   CSRD-export (Supabase Auth ligt er al onder)
-- **Bevestigingsmail** via Resend (`RESEND_API_KEY` is voorbereid): rapport-PDF
-  direct in de inbox
-- **PDF-generatie** van het scanrapport (bijv. `@react-pdf/renderer`)
+- **PDF-bijlage** van het scanrapport in de bevestigingsmail
+  (bijv. `@react-pdf/renderer`; de HTML-mail is er al)

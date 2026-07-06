@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,6 +52,9 @@ export function LeadForm({
 }) {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+  // Spam-signalen: tijdstip waarop het formulier getoond werd + honeypot.
+  const formStartedAt = useRef(Date.now());
+  const honeypotRef = useRef<HTMLInputElement>(null);
   const schema = variant === "whitepaper" ? whitepaperSchema : contactSchema;
 
   const {
@@ -82,6 +85,8 @@ export function LeadForm({
                 ? { bericht: values.bericht }
                 : null,
           bron: variant,
+          website: honeypotRef.current?.value ?? "",
+          formStartedAt: formStartedAt.current,
         }),
       });
       if (!res.ok) throw new Error("Versturen mislukt");
@@ -101,6 +106,18 @@ export function LeadForm({
       className={cn("space-y-4", className)}
       noValidate
     >
+      {/* Honeypot: onzichtbaar voor mensen, bots vullen hem in. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+        <label htmlFor={`${variant}-website`}>Website (niet invullen)</label>
+        <input
+          ref={honeypotRef}
+          id={`${variant}-website`}
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <div className={cn(compact && "flex flex-col gap-3 sm:flex-row sm:items-start")}>
         <div className={cn("space-y-1", compact ? "flex-1" : "mb-4")}>
           <Label htmlFor={`${variant}-naam`}>Naam</Label>
