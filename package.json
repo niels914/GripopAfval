@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "whitepaper": "node --experimental-strip-types whitepaper/generate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.11",
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
