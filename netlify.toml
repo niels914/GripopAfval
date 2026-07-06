@@ -1,0 +1,16 @@
+# Netlify-configuratie voor GripOpAfval
+# De @netlify/plugin-nextjs runtime serveert de Next.js-app (SSR + API-routes).
+# Preview-deploys: koppel branch "staging" als branch-deploy in de Netlify-UI.
+
+[build]
+  command = "npm run build -- --webpack"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.staging]
+  command = "npm run build -- --webpack"

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* KplusV-huisstijl — kleuren en typografie als Tailwind-designtokens.
+   (Tailwind v4: tokens leven in CSS i.p.v. tailwind.config.ts) */
+@theme {
+  /* Kleuren */
+  --color-kpv-paars: #9462a6;
+  --color-kpv-paars-donker: #5760a6;
+  --color-kpv-paars-licht: #b8aed6;
+  --color-kpv-blauw: #007db5;
+  --color-kpv-offwhite: #f7f5fa;
+  --color-kpv-grijs: #2e2e38;
+  --color-kpv-border: #e5e1ec;
+
+  /* Border-radius huisstijl: kaarten 12px */
+  --radius-card: 12px;
+}
+
+@theme inline {
+  /* Typografie via next/font (zie app/layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-kpv-offwhite text-kpv-grijs font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold tracking-tight text-kpv-grijs;
+  }
+
+  ::selection {
+    background-color: var(--color-kpv-paars-licht);
+  }
+
+  /* Zichtbare focus voor toetsenbordnavigatie (WCAG 2.4.7) */
+  :focus-visible {
+    outline: 2px solid var(--color-kpv-blauw);
+    outline-offset: 2px;
+  }
+}
