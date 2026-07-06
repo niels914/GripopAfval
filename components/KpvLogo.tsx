@@ -1,31 +1,70 @@
-/** Logo-placeholder voor KplusV, in huisstijlkleuren. Vervang door het echte logo-SVG. */
-export function KpvLogo({ className = "h-8 w-auto" }: { className?: string }) {
+/**
+ * KplusV-beeldmerk: het vierkante logo met diagonale strepen in de
+ * huisstijlkleuren en de gestapelde tekst K / PLUS / V.
+ * SVG-reconstructie van het officiële logo, zodat het schaalbaar en scherp blijft.
+ */
+const KPV_STRIPE_KLEUREN = [
+  "#007DB5", // blauw
+  "#5760A6", // donkerviolet
+  "#9462A6", // purper
+  "#B8AED6", // lichtviolet
+  "#007DB5",
+  "#5760A6",
+  "#9462A6",
+  "#B8AED6",
+  "#007DB5",
+  "#5760A6",
+  "#9462A6",
+  "#B8AED6",
+];
+
+export function KpvLogo({ className = "h-8 w-8" }: { className?: string }) {
+  const stripeBreedte = 13;
+  const start = -28;
+
   return (
     <svg
-      viewBox="0 0 120 32"
+      viewBox="0 0 100 100"
       className={className}
       role="img"
       aria-label="KplusV logo"
     >
-      <rect x="0" y="4" width="24" height="24" rx="6" fill="#9462A6" />
-      <path
-        d="M7 10v12M7 16l7-6M7 16l7 6"
-        stroke="#fff"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <text
-        x="32"
-        y="23"
-        fontFamily="var(--font-poppins), sans-serif"
-        fontWeight="700"
-        fontSize="17"
-        fill="#2E2E38"
+      <defs>
+        <clipPath id="kpv-vierkant">
+          <rect x="0" y="0" width="100" height="100" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#kpv-vierkant)">
+        <rect x="0" y="0" width="100" height="100" fill="#007DB5" />
+        <g transform="rotate(45 50 50)">
+          {KPV_STRIPE_KLEUREN.map((kleur, i) => (
+            <rect
+              key={i}
+              x={start + i * stripeBreedte}
+              y={-30}
+              width={stripeBreedte}
+              height={160}
+              fill={kleur}
+            />
+          ))}
+        </g>
+      </g>
+      <g
+        fill="#FFFFFF"
+        fontFamily="var(--font-poppins), Arial, sans-serif"
+        fontWeight={700}
+        textAnchor="middle"
       >
-        KplusV
-      </text>
+        <text x="50" y="37" fontSize="34">
+          K
+        </text>
+        <text x="50" y="65" fontSize="26" textLength="86" lengthAdjust="spacingAndGlyphs">
+          PLUS
+        </text>
+        <text x="50" y="94" fontSize="34">
+          V
+        </text>
+      </g>
     </svg>
   );
 }
