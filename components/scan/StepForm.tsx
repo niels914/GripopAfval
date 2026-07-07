@@ -9,7 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { berekenScan, SECTOR_LABELS, type Sector } from "@/lib/scanCalculator";
+import {
+  berekenScan,
+  FTE_LABELS,
+  SECTOR_KENGETALLEN,
+  SECTOR_LABELS,
+  type Sector,
+} from "@/lib/scanCalculator";
+import { formatNumber } from "@/lib/utils";
 import { scanContent } from "@/content/scan";
 
 const sectorEnum = z.enum(
@@ -78,14 +85,27 @@ function SectorVeld({
 }
 
 function FactuurFormulier() {
-  const { toonResultaat, terug } = useScan();
+  const { toonResultaat, terug, laatsteInput } = useScan();
+  // Eerder ingevulde waarden terugzetten bij terugnavigeren.
+  const vorige = laatsteInput?.route === "factuur" ? laatsteInput : null;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FactuurInput, unknown, FactuurValues>({
     resolver: zodResolver(factuurSchema),
-    defaultValues: { sector: "mbo" },
+    defaultValues: vorige
+      ? {
+          sector: vorige.sector,
+          locaties: vorige.locaties,
+          kostenPerJaar: vorige.kostenPerJaar,
+          restTon: vorige.restTon,
+          papierTon: vorige.papierTon,
+          pmdTon: vorige.pmdTon,
+          gftTon: vorige.gftTon,
+          glasTon: vorige.glasTon,
+        }
+      : { sector: "mbo" },
   });
 
   function onSubmit(values: FactuurValues) {
@@ -142,6 +162,7 @@ function FactuurFormulier() {
             {errors.kostenPerJaar.message}
           </p>
         )}
+        <p className="text-xs text-kpv-grijs/70">{scanContent.stap2.hintKosten}</p>
       </div>
 
       <fieldset className="rounded-card border border-kpv-border bg-kpv-offwhite/60 p-4">
@@ -178,15 +199,24 @@ function FactuurFormulier() {
 }
 
 function SchattingFormulier() {
-  const { toonResultaat, terug } = useScan();
+  const { toonResultaat, terug, laatsteInput } = useScan();
+  const vorige = laatsteInput?.route === "schatting" ? laatsteInput : null;
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<SchattingInput, unknown, SchattingValues>({
     resolver: zodResolver(schattingSchema),
-    defaultValues: { sector: "mbo" },
+    defaultValues: vorige
+      ? { sector: vorige.sector, m2: vorige.m2, fte: vorige.fte }
+      : { sector: "mbo" },
   });
+
+  // Sector-afhankelijke hints en veldlabel (leerlingen/leden/fte).
+  const sector = (watch("sector") as Sector) ?? "mbo";
+  const fteLabel = FTE_LABELS[sector];
+  const kengetal = SECTOR_KENGETALLEN[sector];
 
   function onSubmit(values: SchattingValues) {
     toonResultaat(berekenScan({ route: "schatting", ...values }));
@@ -215,9 +245,15 @@ function SchattingFormulier() {
               {errors.m2.message}
             </p>
           )}
+          <p className="text-xs text-kpv-grijs/70">
+            {scanContent.stap2.hintM2(
+              formatNumber(kengetal.kgPerM2, 1),
+              SECTOR_LABELS[sector].toLowerCase()
+            )}
+          </p>
         </div>
         <div className="space-y-1">
-          <Label htmlFor="schatting-fte">Aantal fte / leerlingen</Label>
+          <Label htmlFor="schatting-fte">{`Aantal ${fteLabel}`}</Label>
           <Input
             id="schatting-fte"
             type="number"

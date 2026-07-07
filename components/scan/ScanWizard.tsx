@@ -1,11 +1,37 @@
 "use client";
 
+import { Suspense, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { ScanProvider, useScan } from "@/components/scan/ScanContext";
 import { StepChoice } from "@/components/scan/StepChoice";
 import { StepForm } from "@/components/scan/StepForm";
 import { StepResult } from "@/components/scan/StepResult";
+import { berekenScan } from "@/lib/scanCalculator";
+import { parseDeelQuery } from "@/lib/scanDeepLink";
 import { scanContent } from "@/content/scan";
 import { cn } from "@/lib/utils";
+
+/**
+ * Opent een gedeelde berekening: als de URL geldige scan-parameters bevat
+ * (zie lib/scanDeepLink.ts), toon dan direct het resultaat.
+ */
+function DeepLinkLoader() {
+  const params = useSearchParams();
+  const { toonResultaat, stap } = useScan();
+  const geladen = useRef(false);
+
+  useEffect(() => {
+    if (geladen.current || stap !== 1) return;
+    const input = parseDeelQuery(new URLSearchParams(params.toString()));
+    if (input) {
+      geladen.current = true;
+      toonResultaat(berekenScan(input));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+
+  return null;
+}
 
 function Voortgang() {
   const { stap } = useScan();
@@ -66,6 +92,9 @@ function WizardInhoud() {
 export function ScanWizard() {
   return (
     <ScanProvider>
+      <Suspense fallback={null}>
+        <DeepLinkLoader />
+      </Suspense>
       <WizardInhoud />
     </ScanProvider>
   );
