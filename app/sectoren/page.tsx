@@ -70,7 +70,7 @@ export default function SectorenPagina() {
                     </p>
                   </div>
                   <div className="shrink-0 lg:w-72">
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-kpv-grijs/60">
+                    <h3 className="text-sm font-semibold uppercase tracking-wide text-kpv-grijs/70">
                       Quick wins
                     </h3>
                     <ul className="mt-3 space-y-2">

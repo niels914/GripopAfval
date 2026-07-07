@@ -13,7 +13,7 @@ export default function PrivacyPagina() {
     <section className="py-16 sm:py-20">
       <Container className="prose-kpv max-w-3xl">
         <h1 className="text-4xl sm:text-5xl">Privacyverklaring</h1>
-        <p className="mt-2 text-sm text-kpv-grijs/50">
+        <p className="mt-2 text-sm text-kpv-grijs/70">
           Versie: concept (AVG-conform placeholder — juridisch te toetsen vóór livegang)
         </p>
 

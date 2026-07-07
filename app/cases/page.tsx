@@ -31,7 +31,7 @@ export default function CasesPagina() {
                 <Card className={cn("h-full", item.echte && "border-2 border-kpv-paars")}>
                   <CardHeader>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-kpv-blauw/10 px-3 py-0.5 text-xs font-semibold text-kpv-blauw">
+                      <span className="rounded-full bg-kpv-blauw/10 px-3 py-0.5 text-xs font-semibold text-kpv-blauw-tekst">
                         {item.sector}
                       </span>
                       <span className="rounded-full bg-kpv-offwhite px-3 py-0.5 text-xs font-medium text-kpv-grijs/70">

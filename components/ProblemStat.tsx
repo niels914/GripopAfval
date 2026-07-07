@@ -18,7 +18,7 @@ export function ProblemStat({
       </span>
       <p className="font-heading text-3xl font-bold text-kpv-paars">{number}</p>
       <p className="text-base leading-snug text-kpv-grijs">{label}</p>
-      {source && <p className="text-xs text-kpv-grijs/50">Bron: {source}</p>}
+      {source && <p className="text-xs text-kpv-grijs/70">Bron: {source}</p>}
     </div>
   );
 }

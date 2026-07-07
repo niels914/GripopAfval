@@ -40,7 +40,7 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-kpv-grijs/60 transition-colors hover:text-kpv-grijs focus-visible:outline-2 focus-visible:outline-kpv-blauw">
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-kpv-grijs/70 transition-colors hover:text-kpv-grijs focus-visible:outline-2 focus-visible:outline-kpv-blauw">
         <X className="h-5 w-5" aria-hidden="true" />
         <span className="sr-only">Sluiten</span>
       </DialogPrimitive.Close>

@@ -11,9 +11,9 @@ const buttonVariants = cva(
         primary:
           "bg-kpv-paars text-white shadow-sm hover:bg-kpv-paars-donker",
         secondary:
-          "border-2 border-kpv-blauw bg-transparent text-kpv-blauw hover:bg-kpv-blauw hover:text-white",
-        ghost: "text-kpv-paars hover:bg-kpv-paars/10",
-        link: "text-kpv-blauw underline-offset-4 hover:underline",
+          "border-2 border-kpv-blauw bg-transparent text-kpv-blauw-tekst hover:bg-kpv-blauw hover:text-white",
+        ghost: "text-kpv-paars-donker hover:bg-kpv-paars/10",
+        link: "text-kpv-blauw-tekst underline-offset-4 hover:underline",
       },
       size: {
         default: "h-11 px-6 text-base",

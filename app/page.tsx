@@ -173,7 +173,7 @@ export default function Homepage() {
                   </blockquote>
                   <figcaption className="mt-4 text-sm">
                     <span className="font-semibold">{item.naam}</span>
-                    <span className="block text-kpv-grijs/60">{item.functie}</span>
+                    <span className="block text-kpv-grijs/70">{item.functie}</span>
                   </figcaption>
                 </figure>
               </FadeIn>

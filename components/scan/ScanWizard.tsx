@@ -30,7 +30,7 @@ function Voortgang() {
                   "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold",
                   actief && "bg-kpv-paars text-white",
                   afgerond && "bg-kpv-paars-licht text-white",
-                  !actief && !afgerond && "border border-kpv-border bg-white text-kpv-grijs/50"
+                  !actief && !afgerond && "border border-kpv-border bg-white text-kpv-grijs/70"
                 )}
               >
                 {nummer}
@@ -38,7 +38,7 @@ function Voortgang() {
               <span
                 className={cn(
                   "hidden text-sm font-medium sm:inline",
-                  actief ? "text-kpv-grijs" : "text-kpv-grijs/50"
+                  actief ? "text-kpv-grijs" : "text-kpv-grijs/70"
                 )}
               >
                 {label}

@@ -204,7 +204,7 @@ export function LeadForm({
         </p>
       )}
 
-      <p className="text-xs text-kpv-grijs/50">
+      <p className="text-xs text-kpv-grijs/70">
         Wij gaan zorgvuldig om met uw gegevens en delen ze nooit met inzamelaars.{" "}
         Zie onze <a href="/privacy" className="underline">privacyverklaring</a>.
       </p>

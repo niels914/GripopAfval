@@ -29,7 +29,7 @@ export function Header() {
               <Link
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-kpv-offwhite hover:text-kpv-paars",
+                  "inline-block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-kpv-offwhite hover:text-kpv-paars",
                   pathname === item.href ? "text-kpv-paars" : "text-kpv-grijs"
                 )}
                 aria-current={pathname === item.href ? "page" : undefined}

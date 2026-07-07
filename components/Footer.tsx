@@ -19,7 +19,7 @@ export function Footer() {
                 <KpvLogo className="h-6 w-auto" />
               </a>
             </div>
-            <p className="mt-2 text-xs text-kpv-grijs/60">{site.kplusv.regel}</p>
+            <p className="mt-2 text-xs text-kpv-grijs/70">{site.kplusv.regel}</p>
           </div>
 
           {footerKolommen.map((kolom) => (
@@ -27,12 +27,12 @@ export function Footer() {
               <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-kpv-grijs">
                 {kolom.titel}
               </h2>
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-4 space-y-1">
                 {kolom.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-kpv-grijs/70 hover:text-kpv-paars"
+                      className="inline-block py-1 text-sm text-kpv-grijs/70 hover:text-kpv-paars"
                     >
                       {link.label}
                     </Link>
@@ -44,7 +44,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-kpv-border pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-kpv-grijs/60">
+          <p className="text-xs text-kpv-grijs/70">
             © {new Date().getFullYear()} {site.naam} · onderdeel van{" "}
             <a
               href={site.kplusv.url}
@@ -63,7 +63,7 @@ export function Footer() {
             <li>
               <a
                 href={`mailto:${site.email}`}
-                className="text-kpv-grijs/60 hover:text-kpv-paars"
+                className="text-kpv-grijs/70 hover:text-kpv-paars"
                 aria-label="E-mail ons"
               >
                 <Mail className="h-5 w-5" />
@@ -72,7 +72,7 @@ export function Footer() {
             <li>
               <a
                 href={`tel:${site.telefoon.replace(/[^+\d]/g, "")}`}
-                className="text-kpv-grijs/60 hover:text-kpv-paars"
+                className="text-kpv-grijs/70 hover:text-kpv-paars"
                 aria-label="Bel ons"
               >
                 <Phone className="h-5 w-5" />
@@ -83,7 +83,7 @@ export function Footer() {
                 href={site.linkedinNiels}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-kpv-grijs/60 hover:text-kpv-paars"
+                className="text-kpv-grijs/70 hover:text-kpv-paars"
                 aria-label="LinkedIn van Niels Ahsmann"
               >
                 <Linkedin className="h-5 w-5" />

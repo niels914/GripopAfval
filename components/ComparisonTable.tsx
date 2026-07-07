@@ -14,7 +14,7 @@ function ScoreIcon({ score }: { score: ComparisonScore }) {
   }
   if (score === "deels") {
     return (
-      <span className="inline-flex items-center gap-1 text-kpv-grijs/50">
+      <span className="inline-flex items-center gap-1 text-kpv-grijs/70">
         <Minus className="h-5 w-5" aria-hidden="true" />
         <span className="sr-only">Deels</span>
       </span>

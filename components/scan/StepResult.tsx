@@ -56,7 +56,7 @@ export function StepResult() {
     <div className="space-y-10">
       <div className="text-center">
         <h2 className="text-2xl sm:text-3xl">{c.titel}</h2>
-        <p className="mt-1 text-kpv-grijs/60">
+        <p className="mt-1 text-kpv-grijs/70">
           Sector: {SECTOR_LABELS[resultaat.input.sector]}
         </p>
       </div>
@@ -70,11 +70,11 @@ export function StepResult() {
           <dl className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {kerncijfers.map((cijfer) => (
               <div key={cijfer.label}>
-                <dt className="text-sm text-kpv-grijs/60">{cijfer.label}</dt>
+                <dt className="text-sm text-kpv-grijs/70">{cijfer.label}</dt>
                 <dd className="mt-1 font-heading text-2xl font-bold text-kpv-paars">
                   {cijfer.waarde}
                 </dd>
-                <dd className="text-xs text-kpv-grijs/50">{cijfer.voetnoot}</dd>
+                <dd className="text-xs text-kpv-grijs/70">{cijfer.voetnoot}</dd>
               </div>
             ))}
           </dl>
@@ -85,7 +85,7 @@ export function StepResult() {
       <Card>
         <CardHeader>
           <CardTitle>{c.samenstelling}</CardTitle>
-          <p className="text-sm text-kpv-grijs/60">{c.samenstellingToelichting}</p>
+          <p className="text-sm text-kpv-grijs/70">{c.samenstellingToelichting}</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {resultaat.samenstelling.map((stroom) => (
@@ -104,7 +104,7 @@ export function StepResult() {
         <h3 id="scenario-titel" className="text-xl sm:text-2xl">
           {c.scenarios}
         </h3>
-        <p className="mt-1 max-w-3xl text-sm text-kpv-grijs/60">
+        <p className="mt-1 max-w-3xl text-sm text-kpv-grijs/70">
           {c.scenariosToelichting}
         </p>
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
@@ -138,7 +138,7 @@ export function StepResult() {
         </CardContent>
       </Card>
 
-      <p className="text-center text-xs text-kpv-grijs/50">{c.disclaimer}</p>
+      <p className="text-center text-xs text-kpv-grijs/70">{c.disclaimer}</p>
 
       <div className="flex flex-col-reverse items-center justify-center gap-3 sm:flex-row">
         <Button type="button" variant="ghost" onClick={terug}>

@@ -64,7 +64,16 @@ const extraBesparing2028 =
 
 /* ---------- Stijl ---------- */
 
+/* Lokale fonts (assets/fonts, OFL-licentie) zodat generatie zonder netwerk werkt. */
+const fontFaces = `
+  @font-face { font-family: 'Poppins'; font-weight: 600; src: url('file://${ROOT}/assets/fonts/poppins-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Poppins'; font-weight: 700; src: url('file://${ROOT}/assets/fonts/poppins-700.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 400; src: url('file://${ROOT}/assets/fonts/inter-400.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 500; src: url('file://${ROOT}/assets/fonts/inter-500.woff2') format('woff2'); }
+`;
+
 const css = `
+  ${fontFaces}
   :root {
     --paars: #9462A6; --paars-donker: #5760A6; --paars-licht: #B8AED6;
     --blauw: #007DB5; --offwhite: #F7F5FA; --grijs: #2E2E38; --border: #E5E1EC;
@@ -410,8 +419,6 @@ const html = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <title>Grip op KWD-afval in 2026 — GripOpAfval / KplusV</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <style>${css}</style>
 </head>
 <body>
@@ -424,13 +431,16 @@ writeFileSync(htmlPad, html);
 console.log(`✓ HTML geschreven: ${htmlPad}`);
 
 const { chromium } = await import("@playwright/test");
-const browser = await chromium.launch(
-  process.env.PLAYWRIGHT_CHROMIUM_PATH
+const browser = await chromium.launch({
+  ...(process.env.PLAYWRIGHT_CHROMIUM_PATH
     ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH }
-    : {}
-);
+    : {}),
+  // Lokale @font-face-bestanden laden vanaf file://-pagina's.
+  args: ["--allow-file-access-from-files"],
+});
 const page = await browser.newPage();
 await page.goto(`file://${htmlPad}`, { waitUntil: "networkidle" });
+await page.evaluate(() => document.fonts.ready);
 
 const pdfDir = join(ROOT, "public", "downloads");
 mkdirSync(pdfDir, { recursive: true });

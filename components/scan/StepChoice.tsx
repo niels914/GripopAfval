@@ -42,7 +42,7 @@ export function StepChoice() {
             <span className="rounded-lg bg-kpv-offwhite p-3 text-kpv-paars group-hover:bg-kpv-paars group-hover:text-white">
               <kaart.icon className="h-7 w-7" aria-hidden="true" />
             </span>
-            <span className="rounded-full bg-kpv-blauw/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-kpv-blauw">
+            <span className="rounded-full bg-kpv-blauw/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-kpv-blauw-tekst">
               {kaart.badge}
             </span>
             <span className="font-heading text-xl font-semibold">{kaart.titel}</span>

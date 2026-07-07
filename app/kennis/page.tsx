@@ -70,7 +70,7 @@ export default function KennisPagina() {
               <FadeIn key={artikel.titel} delay={i * 0.05}>
                 <Card className="h-full">
                   <CardHeader>
-                    <span className="w-fit rounded-full bg-kpv-offwhite px-3 py-0.5 text-xs font-medium text-kpv-grijs/60">
+                    <span className="w-fit rounded-full bg-kpv-offwhite px-3 py-0.5 text-xs font-medium text-kpv-grijs/70">
                       {artikel.status}
                     </span>
                     <CardTitle className="mt-2 text-lg leading-snug">

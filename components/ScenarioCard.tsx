@@ -32,7 +32,7 @@ export function ScenarioCard({
             </span>
           )}
         </CardTitle>
-        <p className="text-sm text-kpv-grijs/60">
+        <p className="text-sm text-kpv-grijs/70">
           {Math.round(reduction * 100)}% minder restafval
         </p>
       </CardHeader>
@@ -41,7 +41,7 @@ export function ScenarioCard({
           <div className="flex items-center gap-3">
             <PiggyBank className="h-5 w-5 shrink-0 text-kpv-paars" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/60">Besparing per jaar</dt>
+              <dt className="text-xs text-kpv-grijs/70">Besparing per jaar</dt>
               <dd className="font-heading text-xl font-bold text-kpv-paars">
                 {formatEuro(saving)}
               </dd>
@@ -50,14 +50,14 @@ export function ScenarioCard({
           <div className="flex items-center gap-3">
             <Leaf className="h-5 w-5 shrink-0 text-kpv-blauw" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/60">CO2-reductie</dt>
+              <dt className="text-xs text-kpv-grijs/70">CO2-reductie</dt>
               <dd className="font-medium">{formatNumber(co2, 1)} ton/jaar</dd>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <Timer className="h-5 w-5 shrink-0 text-kpv-blauw" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/60">
+              <dt className="text-xs text-kpv-grijs/70">
                 Terugverdientijd inzamelmiddelen
               </dt>
               <dd className="font-medium">

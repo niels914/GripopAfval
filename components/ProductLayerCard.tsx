@@ -32,7 +32,7 @@ export function ProductLayerCard({
         </p>
         <CardTitle className="text-2xl">{tier}</CardTitle>
         <p className="font-heading text-xl font-semibold text-kpv-paars">{price}</p>
-        <p className="text-sm text-kpv-grijs/60">{duration}</p>
+        <p className="text-sm text-kpv-grijs/70">{duration}</p>
       </CardHeader>
       <CardContent>
         <p className="text-sm leading-relaxed text-kpv-grijs/80">{description}</p>

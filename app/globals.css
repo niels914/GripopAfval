@@ -8,6 +8,9 @@
   --color-kpv-paars-donker: #5760a6;
   --color-kpv-paars-licht: #b8aed6;
   --color-kpv-blauw: #007db5;
+  /* Donkerder variant voor kleine tekst: #007DB5 haalt op offwhite geen
+     WCAG AA (4,21:1); deze wel (>=5:1 op wit en offwhite). */
+  --color-kpv-blauw-tekst: #006d9e;
   --color-kpv-offwhite: #f7f5fa;
   --color-kpv-grijs: #2e2e38;
   --color-kpv-border: #e5e1ec;

@@ -38,12 +38,48 @@ export const metadata: Metadata = {
   },
 };
 
+// Gestructureerde data voor zoekmachines (Organization + Service).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site.url}/#organisatie`,
+      name: site.naam,
+      url: site.url,
+      email: site.email,
+      description: site.beschrijving,
+      parentOrganization: {
+        "@type": "Organization",
+        name: site.kplusv.naam,
+        url: site.kplusv.url,
+      },
+    },
+    {
+      "@type": "Service",
+      name: "Onafhankelijke afvalscheiding op de werkvloer",
+      provider: { "@id": `${site.url}/#organisatie` },
+      areaServed: "NL",
+      audience: {
+        "@type": "BusinessAudience",
+        name: "KWD-organisaties (MBO, hotels, retail, gemeenten, cultuur, kantoren)",
+      },
+      description:
+        "Afvalscan, implementatie op succes-fee en borgingsabonnement voor minder restafval, lagere kosten en CO2-reductie.",
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="nl" className={`${poppins.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-kpv-paars focus:px-4 focus:py-2 focus:text-white"
