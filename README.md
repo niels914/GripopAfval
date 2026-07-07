@@ -4,6 +4,24 @@ Productieklare marketingwebsite voor **GripOpAfval**, de propositie van
 [KplusV](https://www.kplusv.nl) voor onafhankelijke afvalscheiding op de
 werkvloer. Primaire doelgroep: MBO-instellingen.
 
+## Livegang-checklist
+
+Technisch is alles voorbereid; deze stappen vragen accounts/keuzes van het team:
+
+1. **Supabase**: project aanmaken → `supabase/schema.sql` uitvoeren →
+   `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Netlify.
+2. **Resend**: account + domein `gripopafval.nl` verifiëren (SPF/DKIM) →
+   `RESEND_API_KEY`, `RESEND_FROM`, `LEAD_NOTIFY_EMAIL` in Netlify.
+3. **Contactgegevens**: telefoonnummer en LinkedIn-URL in `content/site.ts`
+   zijn placeholders — vervangen door echte waarden.
+4. **Redactie**: whitepaper (`npm run whitepaper`-bron in
+   `whitepaper/generate.ts`), placeholder-quotes (`content/homepage.ts`) en
+   -cases (`content/cases.ts`) redigeren; alle "te valideren"-markeringen
+   in de whitepaper checken.
+5. **Privacyverklaring** (`app/privacy/page.tsx`) juridisch laten toetsen.
+6. **Testlead** end-to-end op productie: scan invullen → rij in Supabase +
+   rapportmail + notificatiemail controleren.
+
 ## Tech-stack
 
 - **Next.js 16** (App Router) + TypeScript — let op: het oorspronkelijke plan
@@ -26,11 +44,25 @@ npm run dev                  # http://localhost:3000
 Zonder Supabase-keys werkt de site gewoon; leads worden dan alleen server-side
 gelogd in plaats van opgeslagen.
 
-### Tests
+### Tests & tooling
 
 ```bash
-npm test          # Vitest: kernberekeningen van de afvalscan
+npm test              # Vitest: kernberekeningen van de afvalscan (15 tests)
+npm run build         # productiebuild
+npm run test:e2e      # Playwright-rooktest: scanflow, leadformulier, 404, sitemap
+npm run whitepaper    # regenereert whitepaper (HTML + PDF) uit lib/scanCalculator.ts
+npm run assets        # regenereert apple-icon.png en opengraph-image.png
 ```
+
+CI (GitHub Actions, `.github/workflows/ci.yml`) draait lint, typecheck,
+unit tests, build en de e2e-rooktest op elke push/PR naar `main` en `staging`.
+
+### Branches
+
+- `main` — productie (Netlify production deploy)
+- `staging` — reviewomgeving; activeer als branch-deploy in Netlify
+  (Site settings → Build & deploy → Branches). Bouw features op `staging`,
+  merge naar `main` na review.
 
 ## Structuur
 

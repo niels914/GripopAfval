@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "whitepaper": "node --experimental-strip-types whitepaper/generate.ts",
-    "assets": "node scripts/genereer-assets.mjs"
+    "assets": "node scripts/genereer-assets.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
