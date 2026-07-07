@@ -1,13 +1,21 @@
 import { describe, expect, it } from "vitest";
 import {
+  benchmarkTegenSector,
+  berekenCashflow,
   berekenFactuurScan,
+  berekenMeerjarenProjectie,
   berekenSchattingScan,
   berekenScan,
+  berekenWhatIf,
   schatTonnageUitKosten,
+  tariefRestInJaar,
   CO2_PER_TON_REST,
   INVESTERING_PER_LOCATIE,
+  KG_PER_FTE,
+  ONZEKERHEIDSMARGE,
   RESTAFVAL_SAMENSTELLING,
   SECTOR_KENGETALLEN,
+  SUCCES_FEE,
   TARIEVEN,
 } from "./scanCalculator";
 
@@ -170,6 +178,143 @@ describe("modelconstanten", () => {
       expect(k.restAandeel).toBeGreaterThan(0);
       expect(k.restAandeel).toBeLessThan(1);
     }
+  });
+});
+
+describe("fte-consistentiecheck (schattingsroute)", () => {
+  it("berekent de fte-schatting en spreiding t.o.v. de m²-schatting", () => {
+    // MBO: m² geeft 20 ton; 1200 leerlingen × 15 kg = 18 ton → spreiding 10%
+    const r = berekenSchattingScan({
+      route: "schatting",
+      sector: "mbo",
+      m2: 10_000,
+      fte: 1200,
+    });
+    expect(r.fteSchattingTon).toBe((1200 * KG_PER_FTE.mbo) / 1000);
+    expect(r.schattingsSpreiding).toBeCloseTo(0.1, 2);
+  });
+
+  it("laat de fte-velden leeg bij de factuurroute", () => {
+    const r = berekenFactuurScan({
+      route: "factuur",
+      sector: "mbo",
+      locaties: 1,
+      kostenPerJaar: 10_000,
+    });
+    expect(r.fteSchattingTon).toBeNull();
+    expect(r.schattingsSpreiding).toBeNull();
+  });
+});
+
+describe("bandbreedtes", () => {
+  it("geeft ±20% rond de puntschatting", () => {
+    const r = berekenFactuurScan({
+      route: "factuur",
+      sector: "mbo",
+      locaties: 1,
+      kostenPerJaar: 50_000,
+      restTon: 100,
+    });
+    const s = r.scenarios[1]; // realistisch: 35 ton × €110 = €3.850
+    expect(s.besparingLaag).toBe(
+      Math.round(s.besparingPerJaar * (1 - ONZEKERHEIDSMARGE))
+    );
+    expect(s.besparingHoog).toBe(
+      Math.round(s.besparingPerJaar * (1 + ONZEKERHEIDSMARGE))
+    );
+    expect(s.besparingLaag).toBeLessThan(s.besparingPerJaar);
+    expect(s.besparingHoog).toBeGreaterThan(s.besparingPerJaar);
+  });
+});
+
+describe("benchmark tegen sector", () => {
+  it("vergelijkt scheidingsgraad met het sectorgemiddelde", () => {
+    // MBO-sector: 40% gescheiden. Eigen situatie 25% → afwijking −37,5%
+    const b = benchmarkTegenSector("mbo", 0.25);
+    expect(b.scheidingsgraadSector).toBeCloseTo(0.4, 3);
+    expect(b.scheidingsgraadAfwijking).toBeCloseTo(-0.375, 3);
+    expect(b.kgPerM2Sector).toBe(2.0);
+  });
+
+  it("zit automatisch in elk scanresultaat", () => {
+    const r = berekenSchattingScan({
+      route: "schatting",
+      sector: "kantoor",
+      m2: 1000,
+      fte: 50,
+    });
+    // Schattingsroute volgt het kengetal → afwijking 0
+    expect(r.benchmark.scheidingsgraadAfwijking).toBeCloseTo(0, 2);
+  });
+});
+
+describe("meerjarenprojectie (CO2-heffing)", () => {
+  it("verdubbelt het restafvaltarief vanaf 2028", () => {
+    expect(tariefRestInJaar(2026)).toBe(TARIEVEN.rest);
+    expect(tariefRestInJaar(2027)).toBe(Math.round(TARIEVEN.rest * 1.5));
+    expect(tariefRestInJaar(2028)).toBe(TARIEVEN.rest * 2);
+    expect(tariefRestInJaar(2030)).toBe(TARIEVEN.rest * 2);
+  });
+
+  it("laat het verschil groeien met het tarief", () => {
+    const p = berekenMeerjarenProjectie({ restTon: 100, gescheidenTon: 50 }, 0.35);
+    expect(p).toHaveLength(5);
+    // 2026: 35 ton × (190−80) = €3.850; 2028: 35 × (380−80) = €10.500
+    expect(p[0].verschil).toBe(3850);
+    expect(p[2].verschil).toBe(10_500);
+    expect(p[4].verschil).toBe(p[2].verschil); // vlak na 2028
+    // Zonder actie stijgen de kosten; met scenario stijgen ze minder hard
+    expect(p[2].kostenZonderActie).toBeGreaterThan(p[0].kostenZonderActie);
+    expect(p[2].kostenMetScenario).toBeLessThan(p[2].kostenZonderActie);
+  });
+});
+
+describe("cashflow met succes-fee", () => {
+  it("rekent fee, investering en netto correct door", () => {
+    // €10.000 bruto, 2 locaties → fee €2.000/jr, investering €3.000 in jaar 1
+    const cf = berekenCashflow(10_000, 2);
+    expect(cf[0]).toMatchObject({
+      jaar: 1,
+      brutoBesparing: 10_000,
+      succesFee: 10_000 * SUCCES_FEE,
+      investering: 2 * INVESTERING_PER_LOCATIE,
+      netto: 10_000 - 2_000 - 3_000,
+    });
+    expect(cf[1].investering).toBe(0);
+    expect(cf[1].netto).toBe(8_000);
+    expect(cf[2].cumulatief).toBe(5_000 + 8_000 + 8_000);
+  });
+});
+
+describe("what-if-herberekening", () => {
+  const basis = berekenFactuurScan({
+    route: "factuur",
+    sector: "mbo",
+    locaties: 2,
+    kostenPerJaar: 50_000,
+    restTon: 100,
+  });
+
+  it("herberekent met aangepaste reductie en tarief", () => {
+    const w = berekenWhatIf(basis, { reductie: 0.4, tariefRest: 300 });
+    // 40 ton × (300−80) = €8.800
+    expect(w.scenario.besparingPerJaar).toBe(8800);
+    expect(w.scenario.id).toBe("maatwerk");
+    expect(w.cashflow[0].succesFee).toBe(Math.round(8800 * SUCCES_FEE));
+    expect(w.projectie[0].tariefRest).toBe(300);
+    expect(w.projectie[2].tariefRest).toBe(600);
+  });
+
+  it("gebruikt de aangepaste investering in terugverdientijd en cashflow", () => {
+    const w = berekenWhatIf(basis, { reductie: 0.2, investeringPerLocatie: 3000 });
+    // 20 ton × 110 = €2.200/jr; investering 2×3000=6000 → 32,7 mnd
+    expect(w.scenario.terugverdientijdMaanden).toBeCloseTo((6000 / 2200) * 12, 1);
+    expect(w.cashflow[0].investering).toBe(6000);
+  });
+
+  it("blijft consistent met de standaardscenario's bij default-aannames", () => {
+    const w = berekenWhatIf(basis, { reductie: 0.35 });
+    expect(w.scenario.besparingPerJaar).toBe(basis.scenarios[1].besparingPerJaar);
   });
 });
 
