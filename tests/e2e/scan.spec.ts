@@ -33,7 +33,7 @@ test("afvalscan: schattingsroute rekent correct en levert lead af", async ({
   // Stap 3: resultaat — cijfers consistent met de unit tests
   await expect(page.getByText("Uw besparingspotentieel")).toBeVisible();
   await expect(page.getByText("€ 2.920")).toBeVisible(); // kosten/jaar
-  await expect(page.getByText("40%")).toBeVisible(); // scheidingsgraad
+  await expect(page.getByText("40%").first()).toBeVisible(); // scheidingsgraad
   await expect(page.getByText("Drie besparingsscenario's")).toBeVisible();
 
   // Stap 4: rapport aanvragen → /bedankt
@@ -44,6 +44,41 @@ test("afvalscan: schattingsroute rekent correct en levert lead af", async ({
   await page.getByRole("button", { name: "Ontvang uw rapport per e-mail" }).click();
   await expect(page).toHaveURL(/\/bedankt/);
   await expect(page.getByText(/binnen 2 werkdagen contact/)).toBeVisible();
+});
+
+test("what-if-slider herberekent live", async ({ page }) => {
+  // Deellink opent direct het resultaat
+  await page.goto("/afvalscan?route=schatting&sector=mbo&m2=10000&fte=1200");
+  await expect(page.getByText("Uw besparingspotentieel")).toBeVisible();
+
+  // Standaard 35%-scenario: € 462; op 50%: € 660 (zelfde cijfers als unit tests)
+  const besparing = page.getByTestId("whatif-besparing");
+  await expect(besparing).toHaveText("€ 462");
+  await page.locator("#whatif-reductie").fill("50");
+  await expect(besparing).toHaveText("€ 660");
+
+  // Cashflow en benchmark zijn zichtbaar
+  await expect(
+    page.getByRole("heading", { name: "Wat kost het — en wat houdt u over?" })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Hoe doet u het vergeleken met uw sector?" })
+  ).toBeVisible();
+});
+
+test("terugnavigeren behoudt de invoer", async ({ page }) => {
+  await page.goto("/afvalscan");
+  await page.getByRole("button", { name: /Ik schat op basis van m²/ }).click();
+  await page.selectOption("#schatting-sector", "hotel");
+  await page.fill("#schatting-m2", "5000");
+  await page.fill("#schatting-fte", "80");
+  await page.getByRole("button", { name: /Bereken mijn besparing/ }).click();
+  await expect(page.getByText("Uw besparingspotentieel")).toBeVisible();
+
+  await page.getByRole("button", { name: "Gegevens aanpassen" }).click();
+  await expect(page.locator("#schatting-m2")).toHaveValue("5000");
+  await expect(page.locator("#schatting-fte")).toHaveValue("80");
+  await expect(page.locator("#schatting-sector")).toHaveValue("hotel");
 });
 
 test("404-pagina verwijst naar de scan", async ({ page }) => {

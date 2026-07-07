@@ -1,4 +1,6 @@
 import {
+  berekenCashflow,
+  berekenMeerjarenProjectie,
   RESTAFVAL_SAMENSTELLING,
   SECTOR_LABELS,
   type ScanResultaat,
@@ -121,11 +123,38 @@ export function renderScanRapportEmail(
           <p style="font-family:${FONT};font-size:14px;font-weight:700;color:${KLEUR.grijs};margin:0;">${s.naam}</p>
           <p style="font-family:${FONT};font-size:12px;color:${KLEUR.grijs};opacity:.6;margin:2px 0 10px;">${Math.round(s.reductie * 100)}% minder restafval</p>
           <p style="font-family:${FONT};font-size:18px;font-weight:700;color:${KLEUR.paars};margin:0;">${formatEuro(s.besparingPerJaar)}</p>
+          ${
+            s.besparingLaag !== undefined && s.besparingHoog !== undefined
+              ? `<p style="font-family:${FONT};font-size:11px;color:${KLEUR.grijs};opacity:.6;margin:1px 0 0;">${formatEuro(s.besparingLaag)} &ndash; ${formatEuro(s.besparingHoog)}</p>`
+              : ""
+          }
           <p style="font-family:${FONT};font-size:12px;color:${KLEUR.grijs};opacity:.7;margin:2px 0 0;">per jaar &middot; ${formatNumber(s.co2ReductieTon, 1)} ton CO2</p>
         </div>
       </td>`
     )
     .join("");
+
+  // Benchmark, 2028-projectie en netto-cashflow (realistisch scenario).
+  const realistisch = resultaat.scenarios[1] ?? resultaat.scenarios[0];
+  const benchmarkRegel = resultaat.benchmark
+    ? `<strong>Benchmark:</strong> uw scheidingsgraad is ${formatNumber(resultaat.scheidingsgraad * 100, 0)}%, het sectorgemiddelde ${formatNumber(resultaat.benchmark.scheidingsgraadSector * 100, 0)}%.`
+    : "";
+  const projectie = berekenMeerjarenProjectie(resultaat, realistisch.reductie);
+  const projectieRijen = projectie
+    .filter((j) => [2026, 2028, 2030].includes(j.jaar))
+    .map(
+      (j) =>
+        `<tr>
+          <td style="font-family:${FONT};font-size:13px;color:${KLEUR.grijs};padding:6px 12px;border-bottom:1px solid ${KLEUR.border};">${j.jaar}</td>
+          <td align="right" style="font-family:${FONT};font-size:13px;color:${KLEUR.grijs};padding:6px 12px;border-bottom:1px solid ${KLEUR.border};">${formatEuro(j.kostenZonderActie)}</td>
+          <td align="right" style="font-family:${FONT};font-size:13px;font-weight:600;color:${KLEUR.paarsDonker};padding:6px 12px;border-bottom:1px solid ${KLEUR.border};">${formatEuro(j.kostenMetScenario)}</td>
+        </tr>`
+    )
+    .join("");
+  const locaties =
+    resultaat.input.route === "factuur" ? resultaat.input.locaties : 1;
+  const cashflow = berekenCashflow(realistisch.besparingPerJaar, locaties);
+  const cumulatief = cashflow[cashflow.length - 1]?.cumulatief ?? 0;
 
   const inhoud = `
     ${p(`Beste ${naam},`)}
@@ -135,9 +164,22 @@ export function renderScanRapportEmail(
     <h2 style="font-family:${FONT};font-size:17px;color:${KLEUR.grijs};margin:24px 0 8px;">Wat zit er nog in uw restafval?</h2>
     ${p(`<span style="font-size:13px;opacity:.7;">Modelmatige samenstelling bij KWD-organisaties; een sorteeranalyse maakt dit exact voor uw locatie.</span>`)}
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;">${samenstelling}</table>
+    ${benchmarkRegel ? p(benchmarkRegel) : ""}
     <h2 style="font-family:${FONT};font-size:17px;color:${KLEUR.grijs};margin:24px 0 8px;">Drie besparingsscenario's</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>${scenarios}</tr></table>
-    ${p(`<span style="font-size:12px;opacity:.6;">Alle bedragen zijn indicatief, gebaseerd op kengetallen en gemiddelde markttarieven (restafval ${formatEuro(190)}/ton, gescheiden gemiddeld ${formatEuro(80)}/ton; CO2 indicatief 1 ton per ton restafval). De betaalde afvalscan vervangt deze schatting door uw werkelijke cijfers.</span>`)}
+    <h2 style="font-family:${FONT};font-size:17px;color:${KLEUR.grijs};margin:24px 0 8px;">Wat gebeurt er als u niets doet?</h2>
+    ${p(`<span style="font-size:13px;">De CO2-heffing verdubbelt het restafvaltarief richting 2028 (aanname). Uw jaarlijkse verwerkingskosten, zonder actie versus met het realistische scenario:</span>`)}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 20px;border:1px solid ${KLEUR.border};border-radius:8px;border-collapse:separate;overflow:hidden;">
+      <tr>
+        <td style="font-family:${FONT};font-size:12px;font-weight:600;color:${KLEUR.grijs};padding:6px 12px;background:${KLEUR.offwhite};">Jaar</td>
+        <td align="right" style="font-family:${FONT};font-size:12px;font-weight:600;color:${KLEUR.grijs};padding:6px 12px;background:${KLEUR.offwhite};">Zonder actie</td>
+        <td align="right" style="font-family:${FONT};font-size:12px;font-weight:600;color:${KLEUR.grijs};padding:6px 12px;background:${KLEUR.offwhite};">Met scenario</td>
+      </tr>
+      ${projectieRijen}
+    </table>
+    <h2 style="font-family:${FONT};font-size:17px;color:${KLEUR.grijs};margin:24px 0 8px;">Wat kost het &mdash; en wat houdt u over?</h2>
+    ${p(`<span style="font-size:13px;">Volledige transparantie: onze succes-fee is 20% van de gerealiseerde besparing en de investering in inzamelmiddelen valt in jaar 1. Netto voordeel per jaar (realistisch scenario): ${cashflow.map((r) => `jaar ${r.jaar}: <strong>${formatEuro(r.netto)}</strong>`).join(" &middot; ")}. <strong>Cumulatief na 3 jaar: ${formatEuro(cumulatief)}.</strong></span>`)}
+    ${p(`<span style="font-size:12px;opacity:.6;">Alle bedragen zijn indicatief (bandbreedte ±20%), gebaseerd op kengetallen en gemiddelde markttarieven (restafval ${formatEuro(190)}/ton, gescheiden gemiddeld ${formatEuro(80)}/ton; CO2 indicatief 1 ton per ton restafval). De betaalde afvalscan vervangt deze schatting door uw werkelijke cijfers.</span>`)}
     ${knop("Plan een verkennend gesprek", `${site.url}/contact`)}
     ${p(`Met vriendelijke groet,<br><strong>Niels Ahsmann</strong><br>GripOpAfval &middot; KplusV`)}
   `;

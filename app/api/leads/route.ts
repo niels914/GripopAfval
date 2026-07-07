@@ -36,7 +36,9 @@ function alsScanResultaat(waarde: unknown): ScanResultaat | null {
     "scenarios" in waarde &&
     Array.isArray((waarde as ScanResultaat).scenarios) &&
     "kostenPerJaar" in waarde &&
-    "input" in waarde
+    "input" in waarde &&
+    typeof (waarde as ScanResultaat).restTon === "number" &&
+    typeof (waarde as ScanResultaat).gescheidenTon === "number"
   ) {
     return waarde as ScanResultaat;
   }
