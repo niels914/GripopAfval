@@ -8,6 +8,7 @@ export function ScenarioCard({
   saving,
   co2,
   payback,
+  savingRange,
   highlight = false,
 }: {
   name: string;
@@ -19,6 +20,8 @@ export function ScenarioCard({
   co2: number;
   /** Terugverdientijd inzamelmiddelen in maanden (null = n.v.t.). */
   payback: number | null;
+  /** Optionele bandbreedte rond de besparing (±onzekerheidsmarge). */
+  savingRange?: { laag: number; hoog: number };
   highlight?: boolean;
 }) {
   return (
@@ -45,6 +48,11 @@ export function ScenarioCard({
               <dd className="font-heading text-xl font-bold text-kpv-paars">
                 {formatEuro(saving)}
               </dd>
+              {savingRange && (
+                <dd className="text-xs text-kpv-grijs/70">
+                  {formatEuro(savingRange.laag)} – {formatEuro(savingRange.hoog)}
+                </dd>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-3">
