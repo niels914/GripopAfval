@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,9 +52,8 @@ export function LeadForm({
 }) {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
-  // Spam-signalen: tijdstip waarop het formulier getoond werd + honeypot.
-  const formStartedAt = useRef(Date.now());
-  const honeypotRef = useRef<HTMLInputElement>(null);
+  // Spam-signaal: tijdstip waarop het formulier getoond werd.
+  const [formStartedAt] = useState(() => Date.now());
   const schema = variant === "whitepaper" ? whitepaperSchema : contactSchema;
 
   const {
@@ -65,8 +64,13 @@ export function LeadForm({
     resolver: zodResolver(schema as typeof contactSchema),
   });
 
-  async function onSubmit(values: ContactValues) {
+  async function onSubmit(values: ContactValues, event?: React.BaseSyntheticEvent) {
     setServerError(null);
+    // Honeypot uitlezen via het formulier zelf (geen ref: react-hooks/refs).
+    const formElement = event?.target as HTMLFormElement | undefined;
+    const honeypot =
+      (formElement?.elements.namedItem("website") as HTMLInputElement | null)
+        ?.value ?? "";
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -85,8 +89,8 @@ export function LeadForm({
                 ? { bericht: values.bericht }
                 : null,
           bron: variant,
-          website: honeypotRef.current?.value ?? "",
-          formStartedAt: formStartedAt.current,
+          website: honeypot,
+          formStartedAt,
         }),
       });
       if (!res.ok) throw new Error("Versturen mislukt");
@@ -110,7 +114,6 @@ export function LeadForm({
       <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
         <label htmlFor={`${variant}-website`}>Website (niet invullen)</label>
         <input
-          ref={honeypotRef}
           id={`${variant}-website`}
           name="website"
           type="text"
