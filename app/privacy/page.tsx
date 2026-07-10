@@ -77,8 +77,21 @@ export default function PrivacyPagina() {
             </p>
           </section>
 
+          <section aria-labelledby="adviesbot">
+            <h2 id="adviesbot" className="text-2xl">7. De adviesbot</h2>
+            <p className="mt-2">
+              De adviesbot op /advies gebruikt AI van Anthropic (Claude). Uw
+              gespreksberichten worden voor het genereren van een antwoord
+              doorgestuurd naar Anthropic; wij slaan de gesprekken zelf niet op
+              en koppelen ze niet aan uw persoon. Deel in het gesprek daarom
+              geen persoonsgegevens — de bot vraagt er ook niet naar. Het
+              advies van de bot is indicatief; er kunnen geen rechten aan
+              worden ontleend.
+            </p>
+          </section>
+
           <section aria-labelledby="cookies">
-            <h2 id="cookies" className="text-2xl">7. Cookies</h2>
+            <h2 id="cookies" className="text-2xl">8. Cookies</h2>
             <p className="mt-2">
               Deze website gebruikt geen tracking- of marketingcookies. Alleen
               functionele opslag die nodig is om de site te laten werken.

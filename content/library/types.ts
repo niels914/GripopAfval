@@ -44,3 +44,14 @@ export interface FaqItem {
   vraag: string;
   antwoord: string;
 }
+
+/** Categorieën waarin de adviesbot handvatten indeelt. */
+export type HandvatCategorie =
+  | "contract"
+  | "middelen"
+  | "inrichting"
+  | "gedrag"
+  | "meten"
+  | "pilot"
+  | "communicatie"
+  | "kennis";

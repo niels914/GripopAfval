@@ -17,6 +17,7 @@ export const site = {
 
 export const navigatie = [
   { href: "/afvalscan", label: "Afvalscan" },
+  { href: "/advies", label: "Adviesbot" },
   { href: "/hoe-werkt-het", label: "Hoe werkt het?" },
   { href: "/voor-mbo", label: "Voor MBO" },
   { href: "/sectoren", label: "Sectoren" },
@@ -30,6 +31,7 @@ export const footerKolommen = [
     titel: "Aanbod",
     links: [
       { href: "/afvalscan", label: "Gratis afvalscan" },
+      { href: "/advies", label: "Adviesbot" },
       { href: "/hoe-werkt-het", label: "Hoe werkt het?" },
       { href: "/onafhankelijk", label: "Onze onafhankelijkheid" },
       { href: "/cases", label: "Klantverhalen" },

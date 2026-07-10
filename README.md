@@ -95,6 +95,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
 RESEND_API_KEY=<resend api-key>
 RESEND_FROM="GripOpAfval <noreply@gripopafval.nl>"
 LEAD_NOTIFY_EMAIL=<ontvanger interne leadnotificaties>
+ANTHROPIC_API_KEY=<anthropic api-key voor de adviesbot>
 NEXT_PUBLIC_SITE_URL=https://gripopafval.nl
 ```
 
@@ -113,6 +114,29 @@ Setup: maak een [Resend](https://resend.com)-account, verifieer het domein
 `RESEND_API_KEY` blijft alles werken; mails worden dan alleen gelogd.
 Formulieren hebben spam-bescherming (honeypot + minimale invultijd) —
 verdachte submissies worden stil genegeerd.
+
+## Adviesbot (/advies)
+
+De adviesbot voert een kort intakegesprek en geeft daarna **tien concrete
+handvatten** op maat: offertepartijen, bakkenkeuze, plaatsing, gedragsaanpak,
+pilotopzet, enzovoort. Opbouw:
+
+- `content/library/handvatten.ts` — de bouwstenenbank waaruit de bot put
+  (alle genoemde partijen/links komen hiervandaan; de bot mag geen URL's
+  verzinnen)
+- `lib/chat/prompt.ts` — systemprompt (intake → tienpuntsadvies, guardrails)
+- `lib/chat/parser.ts` + `types.ts` — het advies komt als JSON tussen
+  `<HANDVATTEN>`-markers en wordt met zod gevalideerd (getest in
+  `lib/chat/parser.test.ts`)
+- `app/api/chat/route.ts` — streamt het antwoord van Claude
+  (`claude-opus-4-8`, adaptieve thinking) als platte tekst
+- `components/chat/AdviesChat.tsx` — chat-UI; rendert het advies als kaarten
+
+Vereist `ANTHROPIC_API_KEY` (maak er een aan op
+[console.anthropic.com](https://console.anthropic.com)). Zonder key blijft de
+pagina werken: de route stuurt dan een nette fallback die naar de afvalscan en
+het contactformulier verwijst. Gesprekken worden niet opgeslagen (zie ook de
+privacyverklaring, sectie 7).
 
 ## Deploy naar Netlify
 

@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { pad: string; prioriteit: number }[] = [
     { pad: "", prioriteit: 1 },
     { pad: "/afvalscan", prioriteit: 0.9 },
+    { pad: "/advies", prioriteit: 0.8 },
     { pad: "/hoe-werkt-het", prioriteit: 0.8 },
     { pad: "/voor-mbo", prioriteit: 0.9 },
     { pad: "/sectoren", prioriteit: 0.7 },
