@@ -6,7 +6,7 @@ export type ComparisonScore = "goed" | "deels" | "slecht";
 function ScoreIcon({ score }: { score: ComparisonScore }) {
   if (score === "goed") {
     return (
-      <span className="inline-flex items-center gap-1 text-kpv-blauw">
+      <span className="inline-flex items-center gap-1 text-diepblauw">
         <Check className="h-5 w-5" aria-hidden="true" />
         <span className="sr-only">Goed</span>
       </span>
@@ -14,14 +14,14 @@ function ScoreIcon({ score }: { score: ComparisonScore }) {
   }
   if (score === "deels") {
     return (
-      <span className="inline-flex items-center gap-1 text-kpv-grijs/70">
+      <span className="inline-flex items-center gap-1 text-tekst-2">
         <Minus className="h-5 w-5" aria-hidden="true" />
         <span className="sr-only">Deels</span>
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 text-kpv-grijs/40">
+    <span className="inline-flex items-center gap-1 text-tekst-2">
       <X className="h-5 w-5" aria-hidden="true" />
       <span className="sr-only">Niet</span>
     </span>
@@ -39,23 +39,14 @@ export function ComparisonTable({
   caption?: string;
 }) {
   return (
-    <div className="overflow-x-auto rounded-card border border-kpv-border bg-white shadow-sm">
-      <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+    <div className="overflow-x-auto">
+      <table className="tabel-huisstijl min-w-[640px]">
         {caption && <caption className="sr-only">{caption}</caption>}
         <thead>
-          <tr className="border-b border-kpv-border bg-kpv-offwhite">
-            <th scope="col" className="px-4 py-3 font-heading font-semibold">
-              &nbsp;
-            </th>
+          <tr>
+            <th scope="col">&nbsp;</th>
             {columns.map((col, i) => (
-              <th
-                scope="col"
-                key={col}
-                className={cn(
-                  "px-4 py-3 text-center font-heading font-semibold",
-                  i === 0 && "text-kpv-paars"
-                )}
-              >
+              <th scope="col" key={col} className={cn("text-center", i === 0 && "bg-purper")}>
                 {col}
               </th>
             ))}
@@ -63,18 +54,12 @@ export function ComparisonTable({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.as} className="border-b border-kpv-border last:border-0">
-              <th scope="row" className="px-4 py-3 font-medium">
+            <tr key={row.as}>
+              <th scope="row" className="font-medium">
                 {row.as}
               </th>
               {row.scores.map((score, i) => (
-                <td
-                  key={i}
-                  className={cn(
-                    "px-4 py-3 text-center",
-                    i === 0 && "bg-kpv-paars/5"
-                  )}
-                >
+                <td key={i} className={cn("text-center", i === 0 && "bg-violet/20")}>
                   <ScoreIcon score={score} />
                 </td>
               ))}

@@ -8,17 +8,13 @@ export function CashflowTabel({ cashflow }: { cashflow: CashflowJaar[] }) {
   const cumulatief = cashflow[cashflow.length - 1]?.cumulatief ?? 0;
 
   return (
-    <div className="overflow-x-auto rounded-card border border-kpv-border bg-white">
-      <table className="w-full min-w-[560px] border-collapse text-sm">
+    <div className="overflow-x-auto">
+      <table className="tabel-huisstijl min-w-[560px]">
         <caption className="sr-only">{c.titel}</caption>
         <thead>
-          <tr className="border-b border-kpv-border bg-kpv-offwhite text-left">
-            {c.kolommen.map((kolom, i) => (
-              <th
-                key={kolom}
-                scope="col"
-                className={`px-4 py-3 font-heading font-semibold ${i > 0 ? "text-right" : ""}`}
-              >
+          <tr>
+            {c.kolommen.map((kolom) => (
+              <th key={kolom} scope="col">
                 {kolom}
               </th>
             ))}
@@ -26,31 +22,25 @@ export function CashflowTabel({ cashflow }: { cashflow: CashflowJaar[] }) {
         </thead>
         <tbody>
           {cashflow.map((rij) => (
-            <tr key={rij.jaar} className="border-b border-kpv-border">
-              <th scope="row" className="px-4 py-3 text-left font-medium">
+            <tr key={rij.jaar}>
+              <th scope="row" className="font-medium">
                 Jaar {rij.jaar}
               </th>
-              <td className="px-4 py-3 text-right">{formatEuro(rij.brutoBesparing)}</td>
-              <td className="px-4 py-3 text-right text-kpv-grijs/70">
-                −{formatEuro(rij.succesFee)}
-              </td>
-              <td className="px-4 py-3 text-right text-kpv-grijs/70">
+              <td>{formatEuro(rij.brutoBesparing)}</td>
+              <td className="text-tekst-2">−{formatEuro(rij.succesFee)}</td>
+              <td className="text-tekst-2">
                 {rij.investering > 0 ? `−${formatEuro(rij.investering)}` : "—"}
               </td>
-              <td
-                className={`px-4 py-3 text-right font-semibold ${rij.netto >= 0 ? "text-kpv-paars" : "text-red-600"}`}
-              >
+              <td className={`font-semibold ${rij.netto >= 0 ? "text-purper" : "text-red-600"}`}>
                 {formatEuro(rij.netto)}
               </td>
             </tr>
           ))}
-          <tr className="bg-kpv-offwhite">
-            <th scope="row" colSpan={4} className="px-4 py-3 text-left font-heading font-semibold">
+          <tr className="bg-mist">
+            <th scope="row" colSpan={4} className="font-semibold">
               {c.cumulatiefLabel}
             </th>
-            <td className="px-4 py-3 text-right font-heading text-base font-bold text-kpv-paars">
-              {formatEuro(cumulatief)}
-            </td>
+            <td className="text-base font-bold text-purper">{formatEuro(cumulatief)}</td>
           </tr>
         </tbody>
       </table>

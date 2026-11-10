@@ -46,7 +46,7 @@ function Slider({
         <label htmlFor={id} className="text-sm font-medium">
           {label}
         </label>
-        <output htmlFor={id} className="font-heading text-sm font-semibold text-kpv-paars">
+        <output htmlFor={id} className="text-sm font-semibold text-purper">
           {weergave}
         </output>
       </div>
@@ -58,7 +58,7 @@ function Slider({
         step={stap}
         value={waarde}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-kpv-border accent-kpv-paars"
+        className="h-2 w-full cursor-pointer appearance-none bg-violet accent-purper"
       />
     </div>
   );
@@ -100,7 +100,7 @@ export function WhatIfSectie({ resultaat }: { resultaat: ScanResultaat }) {
       <Card>
         <CardHeader>
           <CardTitle>{c.whatIf.titel}</CardTitle>
-          <p className="text-sm text-kpv-grijs/70">{c.whatIf.toelichting}</p>
+          <p className="text-sm text-tekst-2">{c.whatIf.toelichting}</p>
         </CardHeader>
         <CardContent>
           <div className="grid gap-8 lg:grid-cols-2">
@@ -151,35 +151,24 @@ export function WhatIfSectie({ resultaat }: { resultaat: ScanResultaat }) {
               </Button>
             </div>
 
-            <dl
-              className="grid grid-cols-2 content-start gap-4"
-              aria-live="polite"
-            >
-              <div className="col-span-2 rounded-card bg-kpv-offwhite p-4">
-                <dt className="text-xs text-kpv-grijs/70">Besparing per jaar</dt>
-                <dd
-                  data-testid="whatif-besparing"
-                  className="font-heading text-3xl font-bold text-kpv-paars"
-                >
+            <dl className="grid grid-cols-2 content-start gap-4" aria-live="polite">
+              <div className="col-span-2">
+                <dt className="text-xs text-tekst-2">Besparing per jaar</dt>
+                <dd data-testid="whatif-besparing" className="text-3xl font-bold text-purper">
                   {formatEuro(scenario.besparingPerJaar)}
                 </dd>
-                <dd className="text-xs text-kpv-grijs/70">
+                <dd className="text-xs text-tekst-2">
                   bandbreedte{" "}
-                  {c.bandbreedte(
-                    formatEuro(scenario.besparingLaag),
-                    formatEuro(scenario.besparingHoog)
-                  )}
+                  {c.bandbreedte(formatEuro(scenario.besparingLaag), formatEuro(scenario.besparingHoog))}
                 </dd>
               </div>
-              <div className="rounded-card bg-kpv-offwhite p-4">
-                <dt className="text-xs text-kpv-grijs/70">CO2-reductie</dt>
-                <dd className="font-heading text-xl font-bold">
-                  {formatNumber(scenario.co2ReductieTon, 1)} ton/jr
-                </dd>
+              <div>
+                <dt className="text-xs text-tekst-2">CO2-reductie</dt>
+                <dd className="text-xl font-bold">{formatNumber(scenario.co2ReductieTon, 1)} ton/jr</dd>
               </div>
-              <div className="rounded-card bg-kpv-offwhite p-4">
-                <dt className="text-xs text-kpv-grijs/70">Terugverdientijd</dt>
-                <dd className="font-heading text-xl font-bold">
+              <div>
+                <dt className="text-xs text-tekst-2">Terugverdientijd</dt>
+                <dd className="text-xl font-bold">
                   {scenario.terugverdientijdMaanden !== null
                     ? `${formatNumber(scenario.terugverdientijdMaanden, 1)} mnd`
                     : "n.v.t."}
@@ -194,11 +183,11 @@ export function WhatIfSectie({ resultaat }: { resultaat: ScanResultaat }) {
       <Card>
         <CardHeader>
           <CardTitle>{c.projectie.titel}</CardTitle>
-          <p className="text-sm text-kpv-grijs/70">{c.projectie.toelichting}</p>
+          <p className="text-sm text-tekst-2">{c.projectie.toelichting}</p>
         </CardHeader>
         <CardContent>
           <MeerjarenGrafiek jaren={projectie} />
-          <p className="mt-4 text-center font-heading text-lg font-semibold text-kpv-paars">
+          <p className="mt-4 text-center text-lg font-semibold text-purper">
             {c.projectie.cumulatiefLabel(formatEuro(cumulatiefProjectie))}
           </p>
         </CardContent>
@@ -208,7 +197,7 @@ export function WhatIfSectie({ resultaat }: { resultaat: ScanResultaat }) {
       <Card>
         <CardHeader>
           <CardTitle>{c.cashflow.titel}</CardTitle>
-          <p className="text-sm text-kpv-grijs/70">{c.cashflow.toelichting}</p>
+          <p className="text-sm text-tekst-2">{c.cashflow.toelichting}</p>
         </CardHeader>
         <CardContent>
           <CashflowTabel cashflow={cashflow} />

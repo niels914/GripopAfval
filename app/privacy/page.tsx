@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
+import { Balk } from "@/components/huisstijl/Balk";
+import { StatusPil } from "@/components/huisstijl/StatusPil";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -10,14 +12,17 @@ export const metadata: Metadata = {
 
 export default function PrivacyPagina() {
   return (
-    <section className="py-16 sm:py-20">
-      <Container className="prose-kpv max-w-3xl">
-        <h1 className="text-4xl sm:text-5xl">Privacyverklaring</h1>
-        <p className="mt-2 text-sm text-kpv-grijs/70">
-          Versie: concept (AVG-conform placeholder — juridisch te toetsen vóór livegang)
-        </p>
+    <section className="sectie">
+      <Container className="max-w-3xl">
+        <Balk as="h1" kleur="inkt">
+          Privacyverklaring
+        </Balk>
+        <div className="mt-3 flex items-center gap-3">
+          <StatusPil>Concept</StatusPil>
+          <p className="text-sm text-tekst-2">AVG-conform placeholder — juridisch te toetsen vóór livegang</p>
+        </div>
 
-        <div className="mt-8 space-y-8 leading-relaxed text-kpv-grijs/80">
+        <div className="mt-8 space-y-8 leading-relaxed text-tekst-2">
           <section aria-labelledby="wie">
             <h2 id="wie" className="text-2xl">1. Wie zijn wij?</h2>
             <p className="mt-2">

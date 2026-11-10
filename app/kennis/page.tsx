@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Clock, ExternalLink } from "lucide-react";
+import { ArrowRight, Clock, ExternalLink } from "lucide-react";
 import { Container } from "@/components/Container";
-import { FadeIn } from "@/components/FadeIn";
 import { LeadForm } from "@/components/LeadForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Balk } from "@/components/huisstijl/Balk";
+import { ChevList } from "@/components/huisstijl/ChevList";
+import { KpiGrid } from "@/components/huisstijl/Kpi";
+import { StatusPil } from "@/components/huisstijl/StatusPil";
+import { PaginaAfsluiting } from "@/components/huisstijl/PaginaAfsluiting";
 import { kennis } from "@/content/kennis";
 import { artikelen } from "@/content/library/artikelen";
 import { praktijkvoorbeelden } from "@/content/library/praktijkvoorbeelden";
@@ -21,246 +25,197 @@ export const metadata: Metadata = {
 export default function KennisPagina() {
   return (
     <>
-      <section className="bg-white py-16 sm:py-20">
+      <section className="sectie">
         <Container className="text-center">
-          <h1 className="text-4xl sm:text-5xl">{kennis.hero.titel}</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-kpv-grijs/70">
-            {kennis.hero.subtitel}
-          </p>
+          <Balk as="h1" kleur="inkt" className="mx-auto text-3xl sm:text-4xl">
+            {kennis.hero.titel}
+          </Balk>
+          <p className="lead mx-auto mt-4">{kennis.hero.subtitel}</p>
         </Container>
       </section>
 
       {/* Whitepaper leadmagnet */}
-      <section aria-labelledby="whitepaper-kop" className="py-16 sm:py-20">
+      <section aria-labelledby="whitepaper-kop" className="sectie">
         <Container>
-          <FadeIn>
-            <div className="grid gap-8 rounded-card border-2 border-kpv-paars bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-2">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-widest text-kpv-blauw-tekst">
-                  Gratis whitepaper
-                </p>
-                <h2 id="whitepaper-kop" className="mt-2 text-2xl sm:text-3xl">
-                  {kennis.whitepaper.kop}
-                </h2>
-                <p className="mt-3 text-kpv-grijs/70">{kennis.whitepaper.tekst}</p>
-                <ul className="mt-4 space-y-2">
-                  {kennis.whitepaper.punten.map((punt) => (
-                    <li key={punt} className="flex items-start gap-2 text-sm">
-                      <CheckCircle2
-                        className="mt-0.5 h-4 w-4 shrink-0 text-kpv-paars"
-                        aria-hidden="true"
-                      />
-                      {punt}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="lg:pt-10">
-                <LeadForm variant="whitepaper" submitLabel={kennis.whitepaper.knop} />
-              </div>
+          <div className="blok-violet blok grid gap-8 lg:grid-cols-2">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest text-inkt">
+                Gratis whitepaper
+              </p>
+              <h2 id="whitepaper-kop" className="mt-2 text-2xl sm:text-3xl">
+                {kennis.whitepaper.kop}
+              </h2>
+              <p className="mt-3 text-tekst">{kennis.whitepaper.tekst}</p>
+              <ChevList className="mt-4 text-sm">
+                {kennis.whitepaper.punten.map((punt) => (
+                  <li key={punt}>{punt}</li>
+                ))}
+              </ChevList>
             </div>
-          </FadeIn>
+            <div className="lg:pt-10">
+              <LeadForm variant="whitepaper" submitLabel={kennis.whitepaper.knop} />
+            </div>
+          </div>
         </Container>
       </section>
 
       {/* Artikelen uit de library */}
-      <section aria-labelledby="artikelen-kop" className="bg-white py-16 sm:py-20">
+      <section aria-labelledby="artikelen-kop" className="sectie">
         <Container>
-          <FadeIn>
-            <h2 id="artikelen-kop" className="text-3xl sm:text-4xl">
-              Artikelen
-            </h2>
-            <p className="mt-2 max-w-2xl text-kpv-grijs/70">
-              Onderbouwd met openbaar onderzoek — elke claim heeft een bron.
-            </p>
-          </FadeIn>
+          <Balk as="h2" id="artikelen-kop">
+            Artikelen
+          </Balk>
+          <p className="lead mt-4">Onderbouwd met openbaar onderzoek — elke claim heeft een bron.</p>
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {artikelen.map((artikel, i) => (
-              <FadeIn key={artikel.slug} delay={i * 0.05}>
-                <Link href={`/kennis/${artikel.slug}`} className="group block h-full">
-                  <Card className="flex h-full flex-col transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
-                    <CardHeader>
-                      <p className="flex items-center gap-1.5 text-xs text-kpv-grijs/70">
-                        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                        {artikel.leestijdMinuten} min leestijd
-                      </p>
-                      <CardTitle className="mt-1 text-lg leading-snug group-hover:text-kpv-paars">
-                        {artikel.titel}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-1 flex-col">
-                      <p className="flex-1 text-sm leading-relaxed text-kpv-grijs/70">
-                        {artikel.samenvatting}
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-kpv-blauw-tekst">
-                        Lees artikel
-                        <ArrowRight
-                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </FadeIn>
+            {artikelen.map((artikel) => (
+              <Link key={artikel.slug} href={`/kennis/${artikel.slug}`} className="group block h-full">
+                <Card className="flex h-full flex-col">
+                  <CardHeader>
+                    <p className="flex items-center gap-1.5 text-xs text-tekst-2">
+                      <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                      {artikel.leestijdMinuten} min leestijd
+                    </p>
+                    <CardTitle className="mt-1 text-lg leading-snug group-hover:text-purper">
+                      {artikel.titel}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex flex-1 flex-col">
+                    <p className="flex-1 text-sm leading-relaxed text-tekst-2">{artikel.samenvatting}</p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-diepblauw">
+                      Lees artikel
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </Container>
       </section>
 
       {/* Kerncijfers */}
-      <section aria-labelledby="cijfers-kop" className="bg-kpv-paars-donker py-16 sm:py-20">
+      <section aria-labelledby="cijfers-kop" className="sectie">
         <Container>
-          <FadeIn>
+          <div className="bg-inkt px-6 py-10 sm:px-10">
             <h2 id="cijfers-kop" className="text-center text-3xl text-white sm:text-4xl">
               De cijfers die u moet kennen
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-center text-white/70">
               Uit openbaar onderzoek van o.a. Rijkswaterstaat, CBS en de Rijksoverheid.
             </p>
-          </FadeIn>
-          <dl className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {kerncijfers.slice(0, 8).map((cijfer, i) => (
-              <FadeIn key={cijfer.label} delay={i * 0.04}>
-                <div className="h-full rounded-card bg-white/10 p-5 text-center">
-                  <dd className="font-heading text-3xl font-bold text-white">
-                    {cijfer.waarde}
-                  </dd>
-                  <dt className="mt-2 text-sm text-white/80">{cijfer.label}</dt>
+            <KpiGrid className="mt-8 !grid-cols-2 lg:!grid-cols-4">
+              {kerncijfers.slice(0, 8).map((cijfer) => (
+                <div key={cijfer.label} className="bg-white/10 p-5 text-center">
+                  <b className="block text-3xl font-bold text-white">{cijfer.waarde}</b>
+                  <span className="mt-2 block text-sm text-white/80">{cijfer.label}</span>
                 </div>
-              </FadeIn>
-            ))}
-          </dl>
+              ))}
+            </KpiGrid>
+          </div>
         </Container>
       </section>
 
       {/* Praktijkvoorbeelden */}
-      <section aria-labelledby="cases-kop" className="py-16 sm:py-20">
+      <section aria-labelledby="cases-kop" className="sectie">
         <Container>
-          <FadeIn>
-            <h2 id="cases-kop" className="text-3xl sm:text-4xl">
-              Zo doen de koplopers het
-            </h2>
-            <p className="mt-2 max-w-2xl text-kpv-grijs/70">
-              Van het drukste station tot de afvalvrije school: praktijkvoorbeelden
-              met de lessen die u morgen kunt toepassen.
-            </p>
-          </FadeIn>
+          <Balk as="h2" kleur="purper" id="cases-kop">
+            Zo doen de koplopers het
+          </Balk>
+          <p className="lead mt-4">
+            Van het drukste station tot de afvalvrije school: praktijkvoorbeelden met de lessen die u morgen
+            kunt toepassen.
+          </p>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {praktijkvoorbeelden.map((voorbeeld, i) => (
-              <FadeIn key={voorbeeld.id} delay={i * 0.05}>
-                <Card className="h-full">
-                  <CardHeader>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-kpv-paars/10 px-3 py-0.5 text-xs font-semibold text-kpv-paars">
-                        {voorbeeld.organisatie}
-                      </span>
-                      <span className="rounded-full bg-kpv-offwhite px-3 py-0.5 text-xs font-medium text-kpv-grijs/70">
-                        {voorbeeld.sector}
-                      </span>
-                    </div>
-                    <CardTitle className="mt-2 text-lg">{voorbeeld.titel}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm leading-relaxed text-kpv-grijs/80">
-                      {voorbeeld.samenvatting}
-                    </p>
-                    <ul className="mt-4 space-y-1.5">
-                      {voorbeeld.lessen.map((les) => (
-                        <li key={les} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2
-                            className="mt-0.5 h-4 w-4 shrink-0 text-kpv-paars"
-                            aria-hidden="true"
-                          />
-                          {les}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </FadeIn>
+            {praktijkvoorbeelden.map((voorbeeld) => (
+              <Card key={voorbeeld.id} className="h-full">
+                <CardHeader>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="status-pil">{voorbeeld.organisatie}</span>
+                    <span className="status-pil">{voorbeeld.sector}</span>
+                  </div>
+                  <CardTitle className="mt-2 text-lg">{voorbeeld.titel}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm leading-relaxed text-tekst-2">{voorbeeld.samenvatting}</p>
+                  <ChevList className="mt-4 text-sm">
+                    {voorbeeld.lessen.map((les) => (
+                      <li key={les}>{les}</li>
+                    ))}
+                  </ChevList>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </Container>
       </section>
 
       {/* FAQ */}
-      <section aria-labelledby="faq-kop" className="bg-white py-16 sm:py-20">
+      <section aria-labelledby="faq-kop" className="sectie">
         <Container className="max-w-3xl">
-          <FadeIn>
-            <h2 id="faq-kop" className="text-3xl sm:text-4xl">
-              Veelgestelde vragen
-            </h2>
-          </FadeIn>
+          <Balk as="h2" id="faq-kop">
+            Veelgestelde vragen
+          </Balk>
           <div className="mt-8 space-y-3">
             {faq.map((item) => (
-              <FadeIn key={item.vraag}>
-                <details className="group rounded-card border border-kpv-border bg-kpv-offwhite p-5 open:bg-white open:shadow-sm">
-                  <summary className="cursor-pointer font-heading font-semibold marker:text-kpv-paars">
-                    {item.vraag}
-                  </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-kpv-grijs/80">
-                    {item.antwoord}
-                  </p>
-                </details>
-              </FadeIn>
+              <details key={item.vraag} className="group blok">
+                <summary className="cursor-pointer font-semibold marker:text-purper">{item.vraag}</summary>
+                <p className="mt-3 text-sm leading-relaxed text-tekst-2">{item.antwoord}</p>
+              </details>
             ))}
           </div>
         </Container>
       </section>
 
       {/* Bronnenbank */}
-      <section aria-labelledby="bronnen-kop" className="py-16 sm:py-20">
+      <section aria-labelledby="bronnen-kop" className="sectie">
         <Container>
-          <FadeIn>
-            <h2 id="bronnen-kop" className="text-3xl sm:text-4xl">
-              Bronnenbank
-            </h2>
-            <p className="mt-2 max-w-2xl text-kpv-grijs/70">
-              Het onderzoek achter onze cijfers. Wij vatten samen in eigen woorden
-              — de originelen vindt u hier.
-            </p>
-          </FadeIn>
+          <Balk as="h2" id="bronnen-kop">
+            Bronnenbank
+          </Balk>
+          <p className="lead mt-4">
+            Het onderzoek achter onze cijfers. Wij vatten samen in eigen woorden — de originelen vindt u hier.
+          </p>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {bronnen.map((b) => (
-              <FadeIn key={b.id}>
-                <div className="h-full rounded-card border border-kpv-border bg-white p-5">
-                  <p className="font-heading font-semibold leading-snug">
-                    {b.url ? (
-                      <a
-                        href={b.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-start gap-1.5 hover:text-kpv-paars"
-                      >
-                        {b.titel}
-                        <ExternalLink className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      </a>
-                    ) : (
-                      b.titel
-                    )}
-                  </p>
-                  <p className="mt-1 text-xs text-kpv-grijs/70">
-                    {b.uitgever} · {b.jaar}
-                    {b.status === "te-valideren" && (
-                      <span className="ml-2 rounded-full bg-kpv-offwhite px-2 py-0.5 text-kpv-grijs/70">
-                        te valideren
-                      </span>
-                    )}
-                  </p>
-                  <ul className="mt-3 space-y-1.5">
-                    {b.kernbevindingen.map((bevinding) => (
-                      <li key={bevinding} className="text-sm leading-relaxed text-kpv-grijs/80">
-                        · {bevinding}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </FadeIn>
+              <div key={b.id} className="blok h-full">
+                <p className="font-semibold leading-snug">
+                  {b.url ? (
+                    <a
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-start gap-1.5 hover:text-purper"
+                    >
+                      {b.titel}
+                      <ExternalLink className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    b.titel
+                  )}
+                </p>
+                <p className="mt-1 flex items-center gap-2 text-xs text-tekst-2">
+                  {b.uitgever} · {b.jaar}
+                  {b.status === "te-valideren" && <StatusPil>te valideren</StatusPil>}
+                </p>
+                <ul className="mt-3 space-y-1.5">
+                  {b.kernbevindingen.map((bevinding) => (
+                    <li key={bevinding} className="text-sm leading-relaxed text-tekst-2">
+                      · {bevinding}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </Container>
       </section>
+
+      <Container>
+        <PaginaAfsluiting
+          meerWetenKop="Liever persoonlijk advies?"
+          meerWetenTekst="Niels bespreekt graag hoe dit onderzoek vertaalt naar uw organisatie."
+        />
+      </Container>
     </>
   );
 }

@@ -34,7 +34,7 @@ export function DeelKnop({ input }: { input: ScanInput }) {
         )}
         {gekopieerd ? c.gekopieerd : c.knop}
       </Button>
-      <p className="mt-1 text-xs text-kpv-grijs/70">{c.toelichting}</p>
+      <p className="mt-1 text-xs text-tekst-2">{c.toelichting}</p>
     </div>
   );
 }

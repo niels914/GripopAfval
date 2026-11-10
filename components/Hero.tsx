@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Knop } from "@/components/huisstijl/Knop";
 import { WasteStreamsIllustration } from "@/components/illustrations";
 import { Container } from "@/components/Container";
 
@@ -15,23 +14,17 @@ export function Hero({
   ctaSecundair?: { label: string; href: string };
 }) {
   return (
-    <section className="bg-white">
-      <Container className="grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
+    <section>
+      <Container className="grid items-center gap-10 py-10 lg:grid-cols-2">
         <div>
-          <h1 className="text-5xl leading-[1.05] font-bold sm:text-6xl lg:text-7xl">
-            {h1}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-kpv-grijs/80">
-            {subheader}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
-              <Link href={ctaPrimair.href}>{ctaPrimair.label}</Link>
-            </Button>
+          <h1 className="balk balk-inkt text-4xl sm:text-5xl">{h1}</h1>
+          <p className="lead mt-6 max-w-xl">{subheader}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Knop href={ctaPrimair.href}>{ctaPrimair.label}</Knop>
             {ctaSecundair && (
-              <Button asChild variant="secondary" size="lg">
-                <Link href={ctaSecundair.href}>{ctaSecundair.label}</Link>
-              </Button>
+              <Knop href={ctaSecundair.href} kleur="diepblauw">
+                {ctaSecundair.label}
+              </Knop>
             )}
           </div>
         </div>

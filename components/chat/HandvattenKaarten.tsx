@@ -38,38 +38,28 @@ export function HandvattenKaarten({ advies }: { advies: HandvattenAdvies }) {
   }
 
   return (
-    <div className="mt-3 rounded-card border-2 border-kpv-paars bg-white p-4 sm:p-5">
-      <p className="text-sm leading-relaxed text-kpv-grijs/80">{advies.intro}</p>
+    <div className="blok-violet blok mt-3">
+      <p className="text-sm leading-relaxed text-tekst">{advies.intro}</p>
 
       <ol className="mt-4 space-y-3">
         {advies.handvatten.map((handvat, i) => (
-          <li
-            key={`${i}-${handvat.titel}`}
-            className="rounded-card border border-kpv-border bg-kpv-offwhite p-4"
-          >
+          <li key={`${i}-${handvat.titel}`} className="bg-white p-4">
             <div className="flex items-start gap-3">
               <span
                 aria-hidden="true"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-kpv-paars font-heading text-sm font-bold text-white"
+                className="flex h-7 w-7 shrink-0 items-center justify-center bg-purper text-sm font-bold text-white"
               >
                 {i + 1}
               </span>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-heading text-base font-semibold leading-snug">
-                    {handvat.titel}
-                  </h3>
-                  <span className="rounded-full bg-kpv-paars/10 px-2.5 py-0.5 text-xs font-medium text-kpv-paars">
-                    {CATEGORIE_LABELS[handvat.categorie]}
-                  </span>
+                  <h3 className="text-base font-bold leading-snug">{handvat.titel}</h3>
+                  <span className="status-pil">{CATEGORIE_LABELS[handvat.categorie]}</span>
                 </div>
-                <p className="mt-1.5 text-sm leading-relaxed text-kpv-grijs/80">
-                  {handvat.toelichting}
-                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-tekst-2">{handvat.toelichting}</p>
                 {handvat.actie && (
                   <p className="mt-2 text-sm">
-                    <span className="font-semibold text-kpv-grijs">Eerste stap:</span>{" "}
-                    {handvat.actie}
+                    <span className="font-semibold text-tekst">Eerste stap:</span> {handvat.actie}
                   </p>
                 )}
                 {handvat.links && handvat.links.length > 0 && (
@@ -79,7 +69,7 @@ export function HandvattenKaarten({ advies }: { advies: HandvattenAdvies }) {
                         <li key={link.url}>
                           <Link
                             href={link.url}
-                            className="inline-flex items-center gap-1 rounded-full border border-kpv-border bg-white px-3 py-1 text-xs font-medium text-kpv-blauw-tekst hover:border-kpv-paars"
+                            className="inline-flex items-center gap-1 bg-mist px-3 py-1 text-xs font-medium text-diepblauw hover:bg-violet"
                           >
                             {link.label}
                             <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
@@ -91,7 +81,7 @@ export function HandvattenKaarten({ advies }: { advies: HandvattenAdvies }) {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 rounded-full border border-kpv-border bg-white px-3 py-1 text-xs font-medium text-kpv-blauw-tekst hover:border-kpv-paars"
+                            className="inline-flex items-center gap-1 bg-mist px-3 py-1 text-xs font-medium text-diepblauw hover:bg-violet"
                           >
                             {link.label}
                             <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
@@ -110,7 +100,7 @@ export function HandvattenKaarten({ advies }: { advies: HandvattenAdvies }) {
       <button
         type="button"
         onClick={kopieer}
-        className="mt-4 inline-flex items-center gap-1.5 rounded-md border border-kpv-border px-3 py-1.5 text-sm font-medium text-kpv-grijs hover:border-kpv-paars hover:text-kpv-paars"
+        className="mt-4 inline-flex items-center gap-1.5 bg-white px-3 py-1.5 text-sm font-medium text-tekst hover:bg-mist"
       >
         {gekopieerd ? (
           <>

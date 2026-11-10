@@ -99,7 +99,7 @@ export function AdviesChat() {
   }
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-card border border-kpv-border bg-white shadow-sm">
+    <div className="flex h-full flex-col overflow-hidden border border-mist bg-white">
       {/* Gespreksvenster */}
       <div
         ref={scrollRef}
@@ -125,7 +125,7 @@ export function AdviesChat() {
             <div key={i}>
               {tekst && <Bubble van="bot">{tekst}</Bubble>}
               {bezigMetAdvies && (
-                <p className="mt-2 flex items-center gap-2 text-sm text-kpv-grijs/70">
+                <p className="mt-2 flex items-center gap-2 text-sm text-tekst-2">
                   <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                   {copy.chat.adviesBezigLabel}
                 </p>
@@ -138,14 +138,14 @@ export function AdviesChat() {
         {bezig &&
           (berichten[berichten.length - 1]?.role === "user" ||
             berichten[berichten.length - 1]?.content === "") && (
-          <p className="flex items-center gap-2 text-sm text-kpv-grijs/70">
+          <p className="flex items-center gap-2 text-sm text-tekst-2">
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
             {copy.chat.bezigLabel}
           </p>
         )}
 
         {fout && (
-          <p role="alert" className="rounded-card bg-red-50 p-3 text-sm text-red-800">
+          <p role="alert" className="bg-red-50 p-3 text-sm text-red-800">
             {fout}
           </p>
         )}
@@ -153,13 +153,13 @@ export function AdviesChat() {
 
       {/* Suggesties */}
       {berichten.length === 0 && (
-        <div className="flex flex-wrap gap-2 border-t border-kpv-border px-4 py-3 sm:px-6">
+        <div className="flex flex-wrap gap-2 border-t border-mist px-4 py-3 sm:px-6">
           {copy.chat.starters.map((starter) => (
             <button
               key={starter}
               type="button"
               onClick={() => void verstuur(starter)}
-              className="rounded-full border border-kpv-border bg-kpv-offwhite px-3 py-1.5 text-left text-sm text-kpv-grijs hover:border-kpv-paars hover:text-kpv-paars"
+              className="status-pil text-left hover:bg-violet"
             >
               {starter}
             </button>
@@ -167,11 +167,11 @@ export function AdviesChat() {
         </div>
       )}
       {aantalGebruikersbeurten >= 2 && !heeftAdvies && !bezig && (
-        <div className="border-t border-kpv-border px-4 py-3 sm:px-6">
+        <div className="border-t border-mist px-4 py-3 sm:px-6">
           <button
             type="button"
             onClick={() => void verstuur("Geef me nu de tien handvatten voor mijn situatie.")}
-            className="inline-flex items-center gap-2 rounded-full bg-kpv-paars px-4 py-2 text-sm font-semibold text-white hover:bg-kpv-paars-donker"
+            className="knop inline-flex items-center gap-2"
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             {copy.chat.handvattenKnop}
@@ -180,7 +180,7 @@ export function AdviesChat() {
       )}
 
       {/* Invoer */}
-      <form onSubmit={onSubmit} className="border-t border-kpv-border p-3 sm:p-4">
+      <form onSubmit={onSubmit} className="border-t border-mist p-3 sm:p-4">
         <div className="flex items-end gap-2">
           <label htmlFor="advies-invoer" className="sr-only">
             Uw bericht aan de adviesbot
@@ -194,18 +194,18 @@ export function AdviesChat() {
             placeholder={copy.chat.invoerPlaceholder}
             rows={2}
             maxLength={4000}
-            className="min-h-[3rem] flex-1 resize-none rounded-md border border-kpv-border bg-white px-3 py-2 text-sm outline-none focus:border-kpv-paars focus:ring-2 focus:ring-kpv-paars/30"
+            className="min-h-[3rem] flex-1 resize-none border border-mist bg-white px-3 py-2 text-sm outline-none focus:border-purper focus:ring-2 focus:ring-purper/30"
           />
           <button
             type="submit"
             disabled={bezig || !invoer.trim()}
-            className="inline-flex h-12 items-center gap-1.5 rounded-md bg-kpv-paars px-4 text-sm font-semibold text-white transition-colors hover:bg-kpv-paars-donker disabled:cursor-not-allowed disabled:opacity-50"
+            className="knop inline-flex h-12 items-center gap-1.5"
           >
             <SendHorizonal className="h-4 w-4" aria-hidden="true" />
             {copy.chat.verstuurLabel}
           </button>
         </div>
-        <p className="mt-2 text-xs leading-relaxed text-kpv-grijs/70">
+        <p className="mt-2 text-xs leading-relaxed text-tekst-2">
           {copy.chat.disclaimer}
         </p>
       </form>
@@ -224,10 +224,8 @@ function Bubble({
     <div className={cn("flex", van === "gebruiker" ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "max-w-[85%] whitespace-pre-wrap rounded-card px-4 py-3 text-sm leading-relaxed",
-          van === "gebruiker"
-            ? "bg-kpv-paars text-white"
-            : "bg-kpv-offwhite text-kpv-grijs"
+          "max-w-[85%] whitespace-pre-wrap px-4 py-3 text-sm leading-relaxed",
+          van === "gebruiker" ? "bg-purper text-white" : "bg-mist text-tekst"
         )}
       >
         {children}

@@ -50,6 +50,11 @@ export const faq: readonly FaqItem[] = [
   {
     vraag: "Wat is VANG Buitenshuis en wat heb ik eraan?",
     antwoord:
-      "VANG Buitenshuis is het programma van Rijkswaterstaat dat de KWD-sector helpt het restafval te halveren (van 2 naar 1 miljoen ton). Het publiceert sorteeranalyses, benchmarks en handreikingen zoals de Wegwijzer Afvalvrij Kantoor — openbare kennis waar elke organisatie gratis gebruik van kan maken. GripOpAfval bouwt op dezelfde onderzoekslijn: KplusV was onderzoekspartner van Rijkswaterstaat binnen Circulair Vooruit.",
+      "VANG Buitenshuis is het programma van Rijkswaterstaat dat de KWD-sector helpt beter te scheiden en minder afval te produceren. In de programmaperiode t/m 2025 was het doel het KWD-restafval te halveren (van 2 naar 1 miljoen ton); het vervolgprogramma 2026-2030 zet dat voort, met de nadruk op het breder verspreiden van wat al werkt. Het programma publiceert sorteeranalyses, benchmarks en handreikingen zoals de Wegwijzer Afvalvrij Kantoor — openbare kennis waar elke organisatie gratis gebruik van kan maken. GripOpAfval bouwt op dezelfde onderzoekslijn: KplusV was onderzoekspartner van Rijkswaterstaat binnen Circulair Vooruit.",
+  },
+  {
+    vraag: "Wij zijn een mbo-instelling of gemeente — speelt aanbesteding een rol?",
+    antwoord:
+      "Mogelijk wel. Mbo-instellingen en gemeenten zijn aanbestedingsplichtige, publiekrechtelijke organisaties; of een adviesopdracht op succes-fee onder die plicht valt, hangt af van de verwachte opdrachtwaarde en de vorm van de overeenkomst. Wij geven hier geen juridisch advies — leg dit vóór een opdracht voor aan uw eigen inkoopafdeling of jurist. Wel kunnen wij meedenken over een vorm (bijvoorbeeld een beperkte pilot onder de drempel) die daarbij past.",
   },
 ] as const;

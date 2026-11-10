@@ -162,11 +162,11 @@ function FactuurFormulier() {
             {errors.kostenPerJaar.message}
           </p>
         )}
-        <p className="text-xs text-kpv-grijs/70">{scanContent.stap2.hintKosten}</p>
+        <p className="text-xs text-tekst-2">{scanContent.stap2.hintKosten}</p>
       </div>
 
-      <fieldset className="rounded-card border border-kpv-border bg-kpv-offwhite/60 p-4">
-        <legend className="px-2 text-sm font-medium text-kpv-grijs/70">
+      <fieldset className="blok">
+        <legend className="px-2 text-sm font-medium text-tekst-2">
           {scanContent.stap2.toelichtingTonnages}
         </legend>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -245,7 +245,7 @@ function SchattingFormulier() {
               {errors.m2.message}
             </p>
           )}
-          <p className="text-xs text-kpv-grijs/70">
+          <p className="text-xs text-tekst-2">
             {scanContent.stap2.hintM2(
               formatNumber(kengetal.kgPerM2, 1),
               SECTOR_LABELS[sector].toLowerCase()
@@ -286,12 +286,12 @@ export function StepForm() {
   const { route } = useScan();
   return (
     <div className="mx-auto max-w-2xl">
-      <h2 className="text-2xl sm:text-3xl">
+      <h2 className="text-2xl font-bold sm:text-3xl">
         {route === "factuur"
           ? scanContent.stap2.titelFactuur
           : scanContent.stap2.titelSchatting}
       </h2>
-      <div className="mt-6 rounded-card border border-kpv-border bg-white p-6 shadow-sm sm:p-8">
+      <div className="mt-6 blok sm:p-8">
         {route === "factuur" ? <FactuurFormulier /> : <SchattingFormulier />}
       </div>
     </div>

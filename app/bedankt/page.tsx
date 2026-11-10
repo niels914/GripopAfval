@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckCircle2, Linkedin } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/ui/button";
+import { Balk } from "@/components/huisstijl/Balk";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -16,15 +17,17 @@ export default function BedanktPagina() {
     <section className="py-20 sm:py-28">
       <Container className="max-w-xl text-center">
         <CheckCircle2
-          className="mx-auto h-16 w-16 text-kpv-paars"
+          className="mx-auto h-16 w-16 text-purper"
           aria-hidden="true"
         />
-        <h1 className="mt-6 text-4xl sm:text-5xl">Bedankt!</h1>
-        <p className="mt-4 text-lg text-kpv-grijs/70">
+        <Balk as="h1" kleur="inkt" className="mx-auto mt-6 text-3xl sm:text-4xl">
+          Bedankt!
+        </Balk>
+        <p className="mt-4 text-lg text-tekst-2">
           Uw aanvraag is ontvangen. <strong>We nemen binnen 2 werkdagen contact
           op</strong> om de volgende stap door te spreken.
         </p>
-        <p className="mt-2 text-kpv-grijs/70">
+        <p className="mt-2 text-tekst-2">
           Alvast kennismaken? Connect met Niels Ahsmann op LinkedIn.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

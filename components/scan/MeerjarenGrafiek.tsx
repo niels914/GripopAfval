@@ -99,7 +99,7 @@ export function MeerjarenGrafiek({ jaren }: { jaren: MeerjarenJaar[] }) {
           );
         })}
       </svg>
-      <figcaption className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-kpv-grijs/70">
+      <figcaption className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-tekst-2">
         <span className="flex items-center gap-1.5">
           <span
             className="inline-block h-2.5 w-2.5 rounded-sm"

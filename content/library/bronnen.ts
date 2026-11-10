@@ -14,10 +14,22 @@ export const bronnen: readonly Bron[] = [
     url: "https://open.rijkswaterstaat.nl/open-overheid/onderzoeksrapporten/@256503/uitvoeringsprogramma-vang-buitenshuis/",
     kernbevindingen: [
       "De KWD-sector (kantoor, winkel, diensten) telt ruim 1 miljoen bedrijven en produceert ± 2 miljoen ton restafval per jaar dat vergelijkbaar is met huishoudelijk afval.",
-      "Programmadoel: halvering van het KWD-restafval naar 1 miljoen ton.",
+      "Programmadoel van déze programmaperiode (t/m 2025): halvering van het KWD-restafval naar 1 miljoen ton.",
       "Focus op afvalpreventie, bronscheiding en circulaire bedrijfsvoering.",
     ],
     status: "geverifieerd",
+  },
+  {
+    id: "vang-uitvoeringsprogramma-2026-2030",
+    titel: "Uitvoeringsprogramma VANG-Buitenshuis 2026-2030",
+    uitgever: "Rijkswaterstaat / Ministerie IenW",
+    jaar: "2026",
+    url: "https://vangbuitenshuis.nl/publish/pages/244987/uitvoeringsprogramma-vang-b-2026-2030-def.pdf",
+    kernbevindingen: [
+      "Vervolgprogramma op het uitvoeringsprogramma t/m 2025; focus op het verspreiden van bestaande kennis naar meer KWD-organisaties zodat zij beter kunnen scheiden en voorkomen.",
+      "Wij hebben de exacte, geactualiseerde kwantitatieve doelstelling voor deze periode niet met de volledige brontekst kunnen verifiëren — citeer daarom de halvering-naar-1-miljoen-ton uit het vorige programma niet als actueel 2026-2030-doel zonder dat zelf na te lezen.",
+    ],
+    status: "te-valideren",
   },
   {
     id: "sorteeranalyse-kwd-2024",

@@ -1,23 +1,16 @@
-import { KpvLogo } from "@/components/KpvLogo";
+import { Logo } from "@/components/huisstijl/Logo";
 import { site } from "@/content/site";
 
 export function TrustBar() {
   return (
-    <section
-      aria-label="Onderdeel van KplusV"
-      className="border-y border-kpv-border bg-white"
-    >
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-6 text-center sm:flex-row sm:gap-8 sm:px-6 lg:px-8">
+    <section aria-label="Onderdeel van KplusV" className="blok">
+      <div className="pagina flex flex-col items-center justify-center gap-3 py-2 text-center sm:flex-row sm:gap-8">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-kpv-grijs/70">
-            Onderdeel van
-          </span>
-          <KpvLogo className="h-7 w-auto" />
+          <span className="text-sm font-medium text-tekst-2">Onderdeel van</span>
+          <Logo className="h-10 w-10" />
         </div>
-        <span className="hidden h-6 w-px bg-kpv-border sm:block" aria-hidden="true" />
-        <p className="text-sm text-kpv-grijs/70">{site.kplusv.regel}</p>
-        <span className="hidden h-6 w-px bg-kpv-border sm:block" aria-hidden="true" />
-        <p className="text-sm text-kpv-grijs/70">{site.kplusv.partner}</p>
+        <p className="text-sm text-tekst-2">{site.kplusv.regel}</p>
+        <p className="text-sm text-tekst-2">{site.kplusv.partner}</p>
       </div>
     </section>
   );

@@ -13,6 +13,13 @@ export const site = {
     regel: "40+ jaar advies in circulaire economie",
     partner: "Onderzoekspartner van Rijkswaterstaat via Circulair Vooruit",
   },
+  /** Contactpersoon voor het "Meer weten?"-blok (huisstijl 2.2). */
+  niels: {
+    naam: "Niels Ahsmann",
+    functie: "Partner en senior adviseur circulaire economie, KplusV",
+    email: "n.ahsmann@kplusv.nl",
+    telefoon: "06 2708 5537",
+  },
 };
 
 export const navigatie = [
@@ -24,36 +31,6 @@ export const navigatie = [
   { href: "/onafhankelijk", label: "Onafhankelijk" },
   { href: "/cases", label: "Cases" },
   { href: "/kennis", label: "Kennis" },
-] as const;
-
-export const footerKolommen = [
-  {
-    titel: "Aanbod",
-    links: [
-      { href: "/afvalscan", label: "Gratis afvalscan" },
-      { href: "/advies", label: "Adviesbot" },
-      { href: "/hoe-werkt-het", label: "Hoe werkt het?" },
-      { href: "/onafhankelijk", label: "Onze onafhankelijkheid" },
-      { href: "/cases", label: "Klantverhalen" },
-    ],
-  },
-  {
-    titel: "Sectoren",
-    links: [
-      { href: "/voor-mbo", label: "MBO-instellingen" },
-      { href: "/sectoren#hotels", label: "Hotels" },
-      { href: "/sectoren#retail", label: "Retail" },
-      { href: "/sectoren#gemeentehuizen", label: "Gemeentehuizen" },
-      { href: "/sectoren#cultuur", label: "Cultuur" },
-    ],
-  },
-  {
-    titel: "Organisatie",
-    links: [
-      { href: "/over", label: "Over GripOpAfval" },
-      { href: "/kennis", label: "Kennis & whitepapers" },
-      { href: "/contact", label: "Contact" },
-      { href: "/privacy", label: "Privacy" },
-    ],
-  },
+  { href: "/over", label: "Over" },
+  { href: "/contact", label: "Contact" },
 ] as const;

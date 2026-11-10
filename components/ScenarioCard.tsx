@@ -1,5 +1,6 @@
 import { Leaf, PiggyBank, Timer } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatusPil } from "@/components/huisstijl/StatusPil";
 import { formatEuro, formatNumber } from "@/lib/utils";
 
 export function ScenarioCard({
@@ -25,47 +26,41 @@ export function ScenarioCard({
   highlight?: boolean;
 }) {
   return (
-    <Card className={highlight ? "border-2 border-kpv-paars" : undefined}>
+    <Card className={highlight ? "blok-violet" : undefined}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center justify-between text-lg">
           {name}
-          {highlight && (
-            <span className="rounded-full bg-kpv-paars/10 px-2.5 py-0.5 text-xs font-medium text-kpv-paars">
-              Meest gekozen
-            </span>
-          )}
+          {highlight && <StatusPil>Meest gekozen</StatusPil>}
         </CardTitle>
-        <p className="text-sm text-kpv-grijs/70">
+        <p className="text-sm text-tekst-2">
           {Math.round(reduction * 100)}% minder restafval
         </p>
       </CardHeader>
       <CardContent>
         <dl className="space-y-3">
           <div className="flex items-center gap-3">
-            <PiggyBank className="h-5 w-5 shrink-0 text-kpv-paars" aria-hidden="true" />
+            <PiggyBank className="h-5 w-5 shrink-0 text-purper" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/70">Besparing per jaar</dt>
-              <dd className="font-heading text-xl font-bold text-kpv-paars">
-                {formatEuro(saving)}
-              </dd>
+              <dt className="text-xs text-tekst-2">Besparing per jaar</dt>
+              <dd className="text-xl font-bold text-purper">{formatEuro(saving)}</dd>
               {savingRange && (
-                <dd className="text-xs text-kpv-grijs/70">
+                <dd className="text-xs text-tekst-2">
                   {formatEuro(savingRange.laag)} – {formatEuro(savingRange.hoog)}
                 </dd>
               )}
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Leaf className="h-5 w-5 shrink-0 text-kpv-blauw" aria-hidden="true" />
+            <Leaf className="h-5 w-5 shrink-0 text-diepblauw" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/70">CO2-reductie</dt>
+              <dt className="text-xs text-tekst-2">CO2-reductie</dt>
               <dd className="font-medium">{formatNumber(co2, 1)} ton/jaar</dd>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Timer className="h-5 w-5 shrink-0 text-kpv-blauw" aria-hidden="true" />
+            <Timer className="h-5 w-5 shrink-0 text-diepblauw" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-kpv-grijs/70">
+              <dt className="text-xs text-tekst-2">
                 Terugverdientijd inzamelmiddelen
               </dt>
               <dd className="font-medium">

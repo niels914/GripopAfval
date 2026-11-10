@@ -68,7 +68,7 @@ export function StepResult() {
     <div className="space-y-10">
       <div className="text-center">
         <h2 className="text-2xl sm:text-3xl">{c.titel}</h2>
-        <p className="mt-1 text-kpv-grijs/70">
+        <p className="mt-1 text-tekst-2">
           Sector: {SECTOR_LABELS[resultaat.input.sector]}
         </p>
       </div>
@@ -82,11 +82,11 @@ export function StepResult() {
           <dl className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {kerncijfers.map((cijfer) => (
               <div key={cijfer.label}>
-                <dt className="text-sm text-kpv-grijs/70">{cijfer.label}</dt>
-                <dd className="mt-1 font-heading text-2xl font-bold text-kpv-paars">
+                <dt className="text-sm text-tekst-2">{cijfer.label}</dt>
+                <dd className="mt-1 font-sans text-2xl font-bold text-purper">
                   {cijfer.waarde}
                 </dd>
-                <dd className="text-xs text-kpv-grijs/70">{cijfer.voetnoot}</dd>
+                <dd className="text-xs text-tekst-2">{cijfer.voetnoot}</dd>
               </div>
             ))}
           </dl>
@@ -97,7 +97,7 @@ export function StepResult() {
       <Card>
         <CardHeader>
           <CardTitle>{c.samenstelling}</CardTitle>
-          <p className="text-sm text-kpv-grijs/70">{c.samenstellingToelichting}</p>
+          <p className="text-sm text-tekst-2">{c.samenstellingToelichting}</p>
         </CardHeader>
         <CardContent className="space-y-4">
           {resultaat.samenstelling.map((stroom) => (
@@ -114,8 +114,8 @@ export function StepResult() {
       {/* Consistentiecheck m² vs. fte (alleen schattingsroute) */}
       {resultaat.schattingsSpreiding !== null &&
         resultaat.fteSchattingTon !== null && (
-          <div className="mx-auto flex max-w-3xl items-start gap-3 rounded-card border border-kpv-border bg-white p-4 text-sm text-kpv-grijs/80">
-            <Info className="mt-0.5 h-5 w-5 shrink-0 text-kpv-blauw" aria-hidden="true" />
+          <div className="blok mx-auto flex max-w-3xl items-start gap-3 text-sm text-tekst-2">
+            <Info className="mt-0.5 h-5 w-5 shrink-0 text-diepblauw" aria-hidden="true" />
             <p>
               {resultaat.schattingsSpreiding <= 0.35
                 ? c.spreiding.consistent
@@ -144,7 +144,7 @@ export function StepResult() {
             )}
             color="#B8AED6"
           />
-          <p className="text-sm text-kpv-grijs/80">
+          <p className="text-sm text-tekst-2">
             {Math.abs(resultaat.benchmark.scheidingsgraadAfwijking) < 0.05
               ? c.benchmark.gelijkAanSector
               : resultaat.benchmark.scheidingsgraadAfwijking > 0
@@ -163,7 +163,7 @@ export function StepResult() {
         <h3 id="scenario-titel" className="text-xl sm:text-2xl">
           {c.scenarios}
         </h3>
-        <p className="mt-1 max-w-3xl text-sm text-kpv-grijs/70">
+        <p className="mt-1 max-w-3xl text-sm text-tekst-2">
           {c.scenariosToelichting}
         </p>
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
@@ -198,7 +198,7 @@ export function StepResult() {
             {quickWinsVoorSector(resultaat.input.sector).map((win) => (
               <li key={win} className="flex items-start gap-2 text-sm">
                 <CheckCircle2
-                  className="mt-0.5 h-4 w-4 shrink-0 text-kpv-paars"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-purper"
                   aria-hidden="true"
                 />
                 {win}
@@ -209,11 +209,11 @@ export function StepResult() {
       </Card>
 
       {/* Aannames — volledige transparantie */}
-      <details className="mx-auto max-w-3xl rounded-card border border-kpv-border bg-white p-5 open:shadow-sm">
-        <summary className="cursor-pointer font-heading font-semibold marker:text-kpv-paars">
+      <details className="blok mx-auto max-w-3xl">
+        <summary className="cursor-pointer font-semibold marker:text-purper">
           {c.aannames.titel}
         </summary>
-        <p className="mt-3 text-sm text-kpv-grijs/70">{c.aannames.toelichting}</p>
+        <p className="mt-3 text-sm text-tekst-2">{c.aannames.toelichting}</p>
         <dl className="mt-4 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
           {(
             [
@@ -230,8 +230,8 @@ export function StepResult() {
               ],
             ] as const
           ).map(([label, waarde]) => (
-            <div key={label} className="flex items-baseline justify-between gap-4 border-b border-kpv-border/60 pb-1">
-              <dt className="text-kpv-grijs/70">{label}</dt>
+            <div key={label} className="flex items-baseline justify-between gap-4 pb-1">
+              <dt className="text-tekst-2">{label}</dt>
               <dd className="whitespace-nowrap font-medium">{waarde}</dd>
             </div>
           ))}
@@ -242,10 +242,10 @@ export function StepResult() {
       <DeelKnop input={resultaat.input} />
 
       {/* Blok 4: CTA */}
-      <Card className="border-2 border-kpv-paars bg-white">
+      <Card className="blok-violet">
         <CardHeader>
           <CardTitle>{c.ctaTitel}</CardTitle>
-          <p className="text-sm text-kpv-grijs/70">{c.ctaTekst}</p>
+          <p className="text-sm text-tekst-2">{c.ctaTekst}</p>
         </CardHeader>
         <CardContent>
           <LeadForm
@@ -257,7 +257,7 @@ export function StepResult() {
         </CardContent>
       </Card>
 
-      <p className="text-center text-xs text-kpv-grijs/70">{c.disclaimer}</p>
+      <p className="text-center text-xs text-tekst-2">{c.disclaimer}</p>
 
       <div className="flex flex-col-reverse items-center justify-center gap-3 sm:flex-row">
         <Button type="button" variant="ghost" onClick={terug}>

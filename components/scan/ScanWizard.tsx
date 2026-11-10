@@ -46,17 +46,17 @@ function Voortgang() {
         const afgerond = stap > nummer;
         return (
           <li key={label} className="flex items-center gap-2 sm:gap-4">
-            {i > 0 && <span className="h-px w-6 bg-kpv-border sm:w-12" aria-hidden="true" />}
+            {i > 0 && <span className="h-px w-6 bg-mist sm:w-12" aria-hidden="true" />}
             <span
               className="flex items-center gap-2"
               aria-current={actief ? "step" : undefined}
             >
               <span
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold",
-                  actief && "bg-kpv-paars text-white",
-                  afgerond && "bg-kpv-paars-licht text-white",
-                  !actief && !afgerond && "border border-kpv-border bg-white text-kpv-grijs/70"
+                  "flex h-8 w-8 items-center justify-center text-sm font-semibold",
+                  actief && "bg-purper text-white",
+                  afgerond && "bg-violet text-tekst",
+                  !actief && !afgerond && "bg-mist text-tekst-2"
                 )}
               >
                 {nummer}
@@ -64,7 +64,7 @@ function Voortgang() {
               <span
                 className={cn(
                   "hidden text-sm font-medium sm:inline",
-                  actief ? "text-kpv-grijs" : "text-kpv-grijs/70"
+                  actief ? "text-tekst" : "text-tekst-2"
                 )}
               >
                 {label}

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Container } from "@/components/Container";
-import { FadeIn } from "@/components/FadeIn";
-import { Button } from "@/components/ui/button";
+import { Balk } from "@/components/huisstijl/Balk";
+import { Knop } from "@/components/huisstijl/Knop";
+import { PaginaAfsluiting } from "@/components/huisstijl/PaginaAfsluiting";
 import { ProductLayerCard } from "@/components/ProductLayerCard";
 import { hoeWerktHet } from "@/content/hoeWerktHet";
 
@@ -18,57 +18,52 @@ export const metadata: Metadata = {
 export default function HoeWerktHetPagina() {
   return (
     <>
-      <section className="bg-white py-16 sm:py-20">
+      <section className="sectie">
         <Container className="text-center">
-          <h1 className="mx-auto max-w-3xl text-4xl sm:text-5xl">
+          <Balk as="h1" kleur="inkt" className="mx-auto text-3xl sm:text-4xl">
             {hoeWerktHet.hero.titel}
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-kpv-grijs/70">
-            {hoeWerktHet.hero.subtitel}
-          </p>
+          </Balk>
+          <p className="lead mx-auto mt-4">{hoeWerktHet.hero.subtitel}</p>
         </Container>
       </section>
 
-      <section aria-label="De drie lagen" className="py-16 sm:py-20">
+      <section aria-label="De drie lagen" className="sectie">
         <Container>
           <div className="grid gap-6 lg:grid-cols-3">
             {hoeWerktHet.lagen.map((laag, i) => (
-              <FadeIn key={laag.tier} delay={i * 0.1}>
-                <ProductLayerCard {...laag} highlight={i === 1} />
-              </FadeIn>
+              <ProductLayerCard key={laag.tier} {...laag} highlight={i === 1} />
             ))}
           </div>
         </Container>
       </section>
 
-      <section aria-labelledby="faq-kop" className="bg-white py-16 sm:py-20">
+      <section aria-labelledby="faq-kop" className="sectie">
         <Container className="max-w-3xl">
-          <FadeIn>
-            <h2 id="faq-kop" className="text-3xl sm:text-4xl">
-              Veelgestelde vragen
-            </h2>
-          </FadeIn>
+          <Balk as="h2" id="faq-kop">
+            Veelgestelde vragen
+          </Balk>
           <div className="mt-8 space-y-4">
             {hoeWerktHet.faq.map((item) => (
-              <FadeIn key={item.vraag}>
-                <details className="group rounded-card border border-kpv-border bg-kpv-offwhite p-5 open:bg-white open:shadow-sm">
-                  <summary className="cursor-pointer font-heading font-semibold marker:text-kpv-paars">
-                    {item.vraag}
-                  </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-kpv-grijs/80">
-                    {item.antwoord}
-                  </p>
-                </details>
-              </FadeIn>
+              <details key={item.vraag} className="group blok">
+                <summary className="cursor-pointer font-semibold marker:text-purper">
+                  {item.vraag}
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-tekst-2">{item.antwoord}</p>
+              </details>
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Button asChild size="lg">
-              <Link href="/afvalscan">Begin met de gratis online scan</Link>
-            </Button>
+            <Knop href="/afvalscan">Begin met de gratis online scan</Knop>
           </div>
         </Container>
       </section>
+
+      <Container>
+        <PaginaAfsluiting
+          meerWetenKop="Vragen over de aanpak?"
+          meerWetenTekst="Niels denkt graag mee over welke laag bij uw situatie past."
+        />
+      </Container>
     </>
   );
 }

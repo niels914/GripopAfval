@@ -2,17 +2,20 @@ import Link from "next/link";
 import { SearchX } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/ui/button";
+import { Balk } from "@/components/huisstijl/Balk";
 
 export default function NotFound() {
   return (
     <section className="py-20 sm:py-28">
       <Container className="max-w-xl text-center">
-        <SearchX className="mx-auto h-16 w-16 text-kpv-paars-licht" aria-hidden="true" />
-        <p className="mt-6 font-heading text-sm font-semibold uppercase tracking-widest text-kpv-blauw">
+        <SearchX className="mx-auto h-16 w-16 text-violet" aria-hidden="true" />
+        <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-widest text-diepblauw">
           404 — pagina niet gevonden
         </p>
-        <h1 className="mt-2 text-4xl sm:text-5xl">Deze pagina is gescheiden ingezameld</h1>
-        <p className="mt-4 text-lg text-kpv-grijs/70">
+        <Balk as="h1" kleur="inkt" className="mx-auto mt-2 text-2xl sm:text-3xl">
+          Deze pagina is gescheiden ingezameld
+        </Balk>
+        <p className="mt-4 text-lg text-tekst-2">
           De pagina die u zoekt bestaat niet (meer). Geen zorgen — het
           besparingspotentieel van uw organisatie vindt u hier wél.
         </p>

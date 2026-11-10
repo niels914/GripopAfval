@@ -1,5 +1,5 @@
-import { Check } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChevList } from "@/components/huisstijl/ChevList";
+import { cn } from "@/lib/utils";
 
 export function ProductLayerCard({
   stap,
@@ -19,34 +19,19 @@ export function ProductLayerCard({
   highlight?: boolean;
 }) {
   return (
-    <Card
-      className={
-        highlight
-          ? "relative border-2 border-kpv-paars shadow-md"
-          : "relative"
-      }
-    >
-      <CardHeader>
-        <p className="text-sm font-medium uppercase tracking-wide text-kpv-blauw">
-          {stap}
-        </p>
-        <CardTitle className="text-2xl">{tier}</CardTitle>
-        <p className="font-heading text-xl font-semibold text-kpv-paars">{price}</p>
-        <p className="text-sm text-kpv-grijs/70">{duration}</p>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm leading-relaxed text-kpv-grijs/80">{description}</p>
-        {punten && punten.length > 0 && (
-          <ul className="mt-4 space-y-2">
-            {punten.map((punt) => (
-              <li key={punt} className="flex items-start gap-2 text-sm">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-kpv-blauw" aria-hidden="true" />
-                <span>{punt}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </CardContent>
-    </Card>
+    <div className={cn("blok flex h-full flex-col", highlight && "blok-violet")}>
+      <p className="text-sm font-semibold uppercase tracking-wide text-inkt">{stap}</p>
+      <h3 className="mt-1 text-2xl font-bold text-tekst">{tier}</h3>
+      <p className="mt-1 text-xl font-bold text-purper">{price}</p>
+      <p className="text-sm text-tekst-2">{duration}</p>
+      <p className="mt-4 text-sm leading-relaxed text-tekst">{description}</p>
+      {punten && punten.length > 0 && (
+        <ChevList className="mt-4 text-sm">
+          {punten.map((punt) => (
+            <li key={punt}>{punt}</li>
+          ))}
+        </ChevList>
+      )}
+    </div>
   );
 }
